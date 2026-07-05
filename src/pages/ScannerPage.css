@@ -1,0 +1,90 @@
+.scanner-page {
+  padding: 20px 16px;
+  animation: fadeIn 0.4s ease;
+}
+
+.scanner-page--locked {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  text-align: center;
+  gap: 8px;
+}
+
+.scanner-page__title {
+  margin: 0 0 20px;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.scanner-page__note {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* ─── Result ────────────────────────────────────────────────────────────────── */
+.scanner-page__result-box {
+  margin-top: 24px;
+  padding: 32px 20px;
+  border-radius: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  animation: fadeSlideUp 0.4s ease;
+}
+
+.scanner-page__result-box--ok {
+  background: rgba(34, 197, 94, 0.08);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.scanner-page__result-box--fail {
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.scanner-page__result-title {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.scanner-page__result-title--ok {
+  color: #22C55E;
+}
+
+.scanner-page__result-title--fail {
+  color: #EF4444;
+}
+
+.scanner-page__result-detail {
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.scanner-page__btn {
+  margin-top: 12px;
+  padding: 12px 28px;
+  background: linear-gradient(135deg, var(--color-accent) 0%, #7C3AED 100%);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.scanner-page__btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(167, 139, 250, 0.35);
+}

@@ -1,0 +1,111 @@
+.tickets-page {
+  padding: 20px 16px;
+  animation: fadeIn 0.4s ease;
+}
+
+.tickets-page--empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  text-align: center;
+  gap: 8px;
+}
+
+.tickets-page__title {
+  margin: 0 0 20px;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.tickets-page__empty-text {
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  margin: 4px 0 0;
+}
+
+.tickets-page__empty-note {
+  font-size: 0.8rem;
+  color: rgba(143, 143, 163, 0.6);
+  margin: 0;
+}
+
+/* ─── Tabs ──────────────────────────────────────────────────────────────────── */
+.tickets-page__tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 20px;
+  scrollbar-width: none;
+}
+
+.tickets-page__tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.tickets-page__tab {
+  flex-shrink: 0;
+  padding: 8px 16px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.tickets-page__tab--active {
+  background: rgba(167, 139, 250, 0.12);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.tickets-page__tab:hover:not(.tickets-page__tab--active) {
+  border-color: rgba(167, 139, 250, 0.3);
+}
+
+/* ─── Event Card ────────────────────────────────────────────────────────────── */
+.tickets-page__event-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.tickets-page__event-img {
+  width: 100%;
+  aspect-ratio: 2 / 1;
+  object-fit: cover;
+}
+
+.tickets-page__event-info {
+  padding: 14px 16px;
+}
+
+.tickets-page__event-title {
+  margin: 0 0 4px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.tickets-page__event-meta {
+  margin: 0 0 2px;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+/* ─── Detail ────────────────────────────────────────────────────────────────── */
+.tickets-page__detail {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  animation: fadeSlideUp 0.4s ease;
+}

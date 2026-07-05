@@ -1,0 +1,62 @@
+.qr-scanner {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  aspect-ratio: 1;
+  margin: 0 auto;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #000;
+}
+
+.qr-scanner #qr-scanner-view {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.qr-scanner #qr-scanner-view video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  border-radius: 20px;
+}
+
+.qr-scanner__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.qr-scanner__frame {
+  width: 220px;
+  height: 220px;
+  border: 3px solid var(--color-accent);
+  border-radius: 16px;
+  box-shadow: 0 0 0 2000px rgba(0, 0, 0, 0.5);
+  animation: scan-pulse 2s ease-in-out infinite;
+}
+
+.qr-scanner__error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 40px;
+  text-align: center;
+  color: #EF4444;
+}
+
+.qr-scanner__error p {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+@keyframes scan-pulse {
+  0%, 100% { border-color: var(--color-accent); }
+  50% { border-color: rgba(167, 139, 250, 0.4); }
+}

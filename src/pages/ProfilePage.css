@@ -1,0 +1,147 @@
+.profile-page {
+  padding: 20px 16px;
+  animation: fadeIn 0.4s ease;
+}
+
+.profile-page__title {
+  margin: 0 0 24px;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.profile-page__cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.profile-page__card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  animation: fadeSlideUp 0.4s ease both;
+}
+
+.profile-page__card:nth-child(1) { animation-delay: 0s; }
+.profile-page__card:nth-child(2) { animation-delay: 0.08s; }
+.profile-page__card:nth-child(3) { animation-delay: 0.16s; }
+
+.profile-page__card-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.profile-page__card-value {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.profile-page__card-badge {
+  display: inline-block;
+  padding: 4px 14px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  background: rgba(167, 139, 250, 0.12);
+  border-radius: 20px;
+  letter-spacing: 0.3px;
+  width: fit-content;
+}
+
+/* ─── Logout ────────────────────────────────────────────────────────────────── */
+.profile-page__logout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px;
+  background: transparent;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 14px;
+  color: #EF4444;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.profile-page__logout:hover {
+  background: rgba(239, 68, 68, 0.08);
+  border-color: #EF4444;
+}
+
+/* ─── Confirm dialog ────────────────────────────────────────────────────────── */
+.profile-page__confirm {
+  padding: 20px;
+  background: var(--color-surface);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 16px;
+  text-align: center;
+  animation: fadeSlideUp 0.3s ease;
+}
+
+.profile-page__confirm-text {
+  margin: 0 0 16px;
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.profile-page__confirm-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.profile-page__confirm-cancel {
+  flex: 1;
+  padding: 12px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  color: var(--color-text-muted);
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.profile-page__confirm-cancel:hover {
+  border-color: var(--color-text-muted);
+}
+
+.profile-page__confirm-yes {
+  flex: 1;
+  padding: 12px;
+  background: #EF4444;
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.profile-page__confirm-yes:hover {
+  background: #DC2626;
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+}
+
+/* ─── Version ───────────────────────────────────────────────────────────────── */
+.profile-page__version {
+  text-align: center;
+  margin-top: 40px;
+  color: rgba(143, 143, 163, 0.4);
+  font-size: 0.7rem;
+}

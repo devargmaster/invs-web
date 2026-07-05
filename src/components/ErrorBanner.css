@@ -1,0 +1,44 @@
+.error-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 12px;
+  margin-bottom: 16px;
+  animation: fadeIn 0.3s ease;
+}
+
+.error-banner__icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  color: #EF4444;
+}
+
+.error-banner__text {
+  flex: 1;
+  margin: 0;
+  color: #FCA5A5;
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.error-banner__retry {
+  flex-shrink: 0;
+  background: transparent;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #EF4444;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.error-banner__retry:hover {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: #EF4444;
+}
