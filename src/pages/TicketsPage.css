@@ -109,3 +109,83 @@
   gap: 20px;
   animation: fadeSlideUp 0.4s ease;
 }
+
+/* ─── Entrada sin asignar (compartir) ────────────────────────────────────────── */
+.tickets-page__unassigned {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  padding: 24px 20px;
+  text-align: center;
+}
+
+.tickets-page__unassigned-text {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+.tickets-page__share-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, var(--color-accent) 0%, #7C3AED 100%);
+  border: none;
+  border-radius: 12px;
+  padding: 13px 22px;
+  color: white;
+  font-weight: 700;
+  font-size: 0.9rem;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.tickets-page__pending-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #FBBF24;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.tickets-page__cancel-btn {
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 9px 16px;
+  color: var(--color-text-muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.tickets-page__cancel-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ─── Toast de confirmación ───────────────────────────────────────────────────── */
+.tickets-page__toast {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #14241C;
+  border: 1px solid #1E3A2E;
+  color: #34D399;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 12px 20px;
+  border-radius: 14px;
+  animation: fadeSlideUp 0.3s ease;
+  z-index: 50;
+}

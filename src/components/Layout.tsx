@@ -1,5 +1,6 @@
 import { NavLink, Outlet } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { IncomingTransferBanner } from './IncomingTransferBanner';
 import './Layout.css';
 
 export function Layout() {
@@ -8,6 +9,7 @@ export function Layout() {
 
   return (
     <div className="layout">
+      <IncomingTransferBanner />
       <main className="layout__main">
         <Outlet />
       </main>

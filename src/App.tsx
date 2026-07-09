@@ -15,6 +15,7 @@ import { CheckoutSummaryPage } from './pages/CheckoutSummaryPage';
 import { CheckoutPaymentCardPage } from './pages/CheckoutPaymentCardPage';
 import { CheckoutTransferPage } from './pages/CheckoutTransferPage';
 import { OrderConfirmationPage } from './pages/OrderConfirmationPage';
+import { AcceptTransferPage } from './pages/AcceptTransferPage';
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
           <Routes>
             {/* Public */}
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/transfers/:token" element={<AcceptTransferPage />} />
 
             {/* Protected — inside Layout with bottom tabs */}
             <Route

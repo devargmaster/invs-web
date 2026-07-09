@@ -1,0 +1,47 @@
+.incoming-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(167, 139, 250, 0.1);
+  border: 1px solid rgba(167, 139, 250, 0.3);
+  border-radius: 14px;
+  padding: 12px 14px;
+  margin: 12px 16px 0;
+  animation: fadeSlideUp 0.3s ease;
+}
+
+.incoming-banner__icon {
+  color: var(--color-accent);
+  flex: none;
+}
+
+.incoming-banner__text {
+  flex: 1;
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+}
+
+.incoming-banner__action {
+  flex: none;
+  background: var(--color-accent);
+  color: #0B0B12;
+  border: none;
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.incoming-banner__dismiss {
+  flex: none;
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 2px;
+}
