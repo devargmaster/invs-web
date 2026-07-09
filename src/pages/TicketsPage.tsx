@@ -23,9 +23,7 @@ export function TicketsPage() {
         if (data.length === 0) return null;
         if (!prev) return data[0];
         const prevInData = data.find(t => t.id === prev.id);
-        if (!prevInData) return data[0];
-        if (!data[0].used && prev.used) return data[0];
-        return prevInData;
+        return prevInData ?? data[0];
       });
     } catch (e) {
       setError(e instanceof ApiError ? e.message : 'Error cargando tickets.');
@@ -77,7 +75,7 @@ export function TicketsPage() {
               onClick={() => setSelected(t)}
             >
               {t.event?.title ?? t.eventId}
-              {t.used ? ' (Usada)' : ''}
+              {t.status === 'USED' ? ' (Usada)' : t.status === 'PENDING_PAYMENT' ? ' (Pendiente)' : ''}
             </button>
           ))}
         </div>
@@ -104,12 +102,24 @@ export function TicketsPage() {
             </div>
           )}
 
+          {selected.category && (
+            <div className="tickets-page__event-meta" style={{ marginBottom: 10 }}>
+              Categoría: {selected.category.name}
+            </div>
+          )}
+
           <QRDisplay
             qrPayload={selected.qrPayload}
-            used={selected.used}
+            status={selected.status}
             usedAt={selected.usedAt}
             expiresAt={selected.expiresAt}
           />
+
+          {!selected.holderUserId && selected.status === 'ACTIVE' && (
+            <div className="tickets-page__event-meta" style={{ marginTop: 10, color: 'var(--color-accent)' }}>
+              Esta entrada todavía no está asignada — próximamente vas a poder compartirla por email.
+            </div>
+          )}
         </div>
       )}
     </div>

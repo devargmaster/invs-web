@@ -38,8 +38,12 @@ async function request<T>(
   const url = `${ENV.API_BASE_URL}${path}`;
   const token = getToken();
 
+  // FormData (ej: subir comprobante de transferencia) fija su propio
+  // Content-Type con boundary — no hay que forzar application/json ahí.
+  const isFormData = options.body instanceof FormData;
+
   const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
+    ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
     ...(options.headers as Record<string, string> | undefined),
   };
 
@@ -104,5 +108,10 @@ export const apiClient = {
 
   delete<T>(path: string) {
     return request<T>(path, { method: 'DELETE' });
+  },
+
+  /** POST con FormData (ej: subir comprobante de transferencia como archivo). */
+  postForm<T>(path: string, formData: FormData) {
+    return request<T>(path, { method: 'POST', body: formData });
   },
 };

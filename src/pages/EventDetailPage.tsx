@@ -26,7 +26,6 @@ export function EventDetailPage() {
   const [streamError, setStreamError] = useState<string | null>(null);
 
   const [hasTicket, setHasTicket] = useState(false);
-  const [buying, setBuying] = useState(false);
 
   useEffect(() => {
     if (!eventId) return;
@@ -36,8 +35,8 @@ export function EventDetailPage() {
       .catch(e => setError(e instanceof ApiError ? e.message : 'Error cargando evento.'))
       .finally(() => setLoading(false));
 
-    ticketsService.getTicketForEvent(eventId)
-      .then(t => setHasTicket(!!t))
+    ticketsService.getTicketsForEvent(eventId)
+      .then(tickets => setHasTicket(tickets.length > 0))
       .catch(() => setHasTicket(false));
   }, [eventId]);
 
@@ -83,20 +82,6 @@ export function EventDetailPage() {
       }
     } finally {
       setStreamLoading(false);
-    }
-  };
-
-  const handleBuyTicket = async () => {
-    if (!eventId) return;
-    setBuying(true);
-    setError(null);
-    try {
-      await ticketsService.createTicket(eventId);
-      setHasTicket(true);
-    } catch (e) {
-      setError(e instanceof ApiError ? e.message : 'Error al obtener la entrada.');
-    } finally {
-      setBuying(false);
     }
   };
 
@@ -224,7 +209,19 @@ export function EventDetailPage() {
       {/* Ticket section */}
       {canGetTicket && (
         <div className="detail-page__section">
-          {hasTicket ? (
+          <button
+            className="detail-page__btn detail-page__btn--success"
+            onClick={() => navigate(`/eventos/${eventId}/checkout`)}
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="20" height="20">
+              <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" />
+              <path d="M13 5v2" />
+              <path d="M13 17v2" />
+              <path d="M13 11v2" />
+            </svg>
+            Comprar entradas
+          </button>
+          {hasTicket && (
             <button
               className="detail-page__btn detail-page__btn--secondary"
               onClick={() => navigate('/entradas')}
@@ -234,27 +231,7 @@ export function EventDetailPage() {
                 <rect x="7" y="7" width="10" height="10" />
                 <rect x="9" y="9" width="6" height="6" />
               </svg>
-              Mi entrada QR
-            </button>
-          ) : (
-            <button
-              className="detail-page__btn detail-page__btn--success"
-              onClick={handleBuyTicket}
-              disabled={buying}
-            >
-              {buying ? (
-                <span className="detail-page__btn-spinner"></span>
-              ) : (
-                <>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="20" height="20">
-                    <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" />
-                    <path d="M13 5v2" />
-                    <path d="M13 17v2" />
-                    <path d="M13 11v2" />
-                  </svg>
-                  Obtener Entrada
-                </>
-              )}
+              Ver mis entradas de este evento
             </button>
           )}
         </div>

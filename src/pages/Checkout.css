@@ -1,0 +1,475 @@
+/* Compartido por todas las pantallas de checkout (categorías, addons,
+   resumen, pago, transferencia, confirmación) — es un mismo flujo de
+   varios pasos, tiene sentido compartir un solo stylesheet. */
+
+.checkout-page {
+  padding: 16px 16px 100px;
+  animation: fadeIn 0.4s ease;
+}
+
+.checkout-page__header {
+  margin-bottom: 20px;
+}
+
+.checkout-page__step {
+  color: var(--color-accent);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.checkout-page__title {
+  margin-top: 6px;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.checkout-page__subtitle {
+  margin-top: 4px;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+/* ─── Tarjetas de ítem (categoría / addon) ──────────────────────── */
+.checkout-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.checkout-item__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.checkout-item__name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.checkout-item__desc {
+  margin-top: 3px;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+.checkout-item__meta {
+  margin-top: 6px;
+  font-size: 0.75rem;
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.checkout-item__price {
+  margin-top: 8px;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.checkout-item__available {
+  margin-top: 4px;
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+}
+
+.checkout-item__available--low {
+  color: #FBBF24;
+}
+
+.checkout-item__available--none {
+  color: var(--color-danger);
+}
+
+/* ─── Stepper de cantidad ────────────────────────────────────────── */
+.checkout-stepper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: none;
+}
+
+.checkout-stepper__btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
+  background: rgba(167, 139, 250, 0.08);
+  color: var(--color-accent);
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.checkout-stepper__btn:hover:not(:disabled) {
+  background: rgba(167, 139, 250, 0.18);
+}
+
+.checkout-stepper__btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.checkout-stepper__count {
+  min-width: 20px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+/* ─── Variantes (talles) ─────────────────────────────────────────── */
+.checkout-variants {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.checkout-variant-chip {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.checkout-variant-chip--active {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #0B0B12;
+}
+
+/* ─── Barra inferior fija con total + continuar ─────────────────── */
+.checkout-page__footer {
+  position: fixed;
+  bottom: 64px; /* arriba del bottom-nav del Layout */
+  left: 0;
+  right: 0;
+  max-width: 480px;
+  margin: 0 auto;
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  z-index: 5;
+}
+
+.checkout-page__footer-total {
+  display: flex;
+  flex-direction: column;
+}
+
+.checkout-page__footer-total-label {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.checkout-page__footer-total-value {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+/* ─── Botones (mismo lenguaje que detail-page) ───────────────────── */
+.checkout-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 22px;
+  border: none;
+  border-radius: 14px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  min-height: 50px;
+}
+
+.checkout-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.checkout-btn--primary {
+  background: linear-gradient(135deg, var(--color-accent) 0%, #7C3AED 100%);
+  color: white;
+}
+
+.checkout-btn--primary:hover:not(:disabled) {
+  box-shadow: 0 8px 25px rgba(167, 139, 250, 0.35);
+}
+
+.checkout-btn--secondary {
+  background: transparent;
+  border: 2px solid var(--color-accent);
+  color: var(--color-accent);
+}
+
+.checkout-btn--block {
+  width: 100%;
+}
+
+.checkout-btn-spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spinner-rotate 0.7s linear infinite;
+}
+
+/* ─── Método de pago ──────────────────────────────────────────────── */
+.checkout-payment-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.checkout-payment-option--active {
+  border-color: var(--color-accent);
+  background: rgba(167, 139, 250, 0.06);
+}
+
+.checkout-payment-option__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(167, 139, 250, 0.12);
+  color: var(--color-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+
+.checkout-payment-option__label {
+  font-weight: 700;
+  color: var(--color-text);
+  font-size: 0.95rem;
+}
+
+.checkout-payment-option__sub {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+/* ─── Resumen (línea ítem + precio) ──────────────────────────────── */
+.checkout-summary-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.88rem;
+}
+
+.checkout-summary-line__label {
+  color: var(--color-text-secondary);
+}
+
+.checkout-summary-line__value {
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.checkout-summary-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-top: 14px;
+  margin-top: 6px;
+  font-size: 1.1rem;
+}
+
+.checkout-summary-total__label {
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.checkout-summary-total__value {
+  font-weight: 900;
+  color: var(--color-accent);
+  font-size: 1.3rem;
+}
+
+/* ─── Datos bancarios ─────────────────────────────────────────────── */
+.checkout-bank-info {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  margin-bottom: 18px;
+}
+
+.checkout-bank-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  font-size: 0.85rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.checkout-bank-row:last-child {
+  border-bottom: none;
+}
+
+.checkout-bank-row__label {
+  color: var(--color-text-muted);
+}
+
+.checkout-bank-row__value {
+  color: var(--color-text);
+  font-weight: 700;
+  font-family: ui-monospace, monospace;
+}
+
+/* ─── Input de archivo ────────────────────────────────────────────── */
+.checkout-file-input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--color-surface);
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  margin-bottom: 16px;
+  transition: border-color 0.2s;
+}
+
+.checkout-file-input--filled {
+  border-style: solid;
+  border-color: var(--color-accent);
+  color: var(--color-text);
+}
+
+.checkout-input {
+  width: 100%;
+  padding: 13px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  background: #0F0F19;
+  color: var(--color-text);
+  font-size: 0.95rem;
+  font-family: inherit;
+  margin-bottom: 14px;
+}
+
+.checkout-input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+.checkout-field-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 7px;
+}
+
+/* ─── Confirmación ────────────────────────────────────────────────── */
+.checkout-confirm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 40px 16px;
+}
+
+.checkout-confirm__icon {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 22px;
+}
+
+.checkout-confirm__icon--success {
+  background: radial-gradient(circle, #1E3A2E 0%, #132318 100%);
+  box-shadow: 0 0 40px rgba(52, 211, 153, 0.25);
+  color: #34D399;
+}
+
+.checkout-confirm__icon--pending {
+  background: radial-gradient(circle, #3A2E1E 0%, #231C13 100%);
+  box-shadow: 0 0 40px rgba(251, 191, 36, 0.2);
+  color: #FBBF24;
+}
+
+.checkout-confirm__title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.checkout-confirm__text {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  max-width: 320px;
+}
+
+.checkout-note {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: 14px 16px;
+  margin-top: 20px;
+  text-align: left;
+  width: 100%;
+}
+
+.checkout-note__text {
+  font-size: 0.82rem;
+  color: var(--color-text-secondary);
+  line-height: 1.45;
+}
+
+.checkout-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}

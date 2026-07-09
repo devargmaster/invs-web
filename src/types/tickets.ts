@@ -1,11 +1,34 @@
+import type { TicketCategory } from './checkout';
+
+export type TicketStatus = 'PENDING_PAYMENT' | 'ACTIVE' | 'USED' | 'CANCELLED';
+export type TicketTransferStatus = 'PENDING' | 'ACCEPTED' | 'CANCELLED' | 'EXPIRED';
+
+export interface TicketTransfer {
+  id: string;
+  ticketId: string;
+  fromUserId: string;
+  toEmail: string;
+  toUserId: string | null;
+  status: TicketTransferStatus;
+  token: string;
+  expiresAt: string;
+  acceptedAt: string | null;
+  cancelledAt: string | null;
+  createdAt: string;
+}
+
 export interface Ticket {
   id: string;
-  userId: string;
+  orderId: string;
+  categoryId: string;
   eventId: string;
-  qrPayload: string;
-  used: boolean;
+  holderUserId: string | null;
+  purchaserUserId: string;
+  status: TicketStatus;
+  qrPayload: string | null;
   usedAt: string | null;
-  expiresAt: string;
+  scannedBy: string | null;
+  expiresAt: string | null;
   createdAt: string;
   event?: {
     id: string;
@@ -14,6 +37,9 @@ export interface Ticket {
     location: string | null;
     mode: string;
   };
+  category?: TicketCategory;
+  /** Transferencias PENDING de esta entrada (a lo sumo una a la vez). */
+  transfers?: TicketTransfer[];
 }
 
 export interface ValidateTicketResponse {
@@ -33,3 +59,21 @@ export type ValidateErrorReason =
   | 'INVALID_SIGNATURE'
   | 'NOT_FOUND'
   | 'UNKNOWN';
+
+// ─── Transferencia: aceptar / detalle público ──────────────────────
+export interface TransferPublicDetail {
+  eventTitle: string;
+  categoryName: string;
+  fromUserName: string;
+  toEmail: string;
+  recipientHasAccount: boolean;
+}
+
+export interface IncomingTransfer extends TicketTransfer {
+  ticket: {
+    id: string;
+    event: { id: string; title: string; date: string };
+    category: TicketCategory;
+  };
+  fromUser: { fullName: string };
+}
