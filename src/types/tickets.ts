@@ -42,6 +42,15 @@ export interface Ticket {
   transfers?: TicketTransfer[];
 }
 
+export interface RedeemableAddon {
+  id: string;
+  name: string;
+  variant: string | null;
+  quantity: number;
+  redeemedCount: number;
+  pending: number;
+}
+
 export interface ValidateTicketResponse {
   valid: boolean;
   message: string;
@@ -51,6 +60,8 @@ export interface ValidateTicketResponse {
     event: string;
     validatedAt: string;
   };
+  /** Adicionales de la compra con unidades pendientes de entrega. */
+  addons?: RedeemableAddon[];
 }
 
 export type ValidateErrorReason =

@@ -100,3 +100,46 @@
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(167, 139, 250, 0.35);
 }
+
+/* ── Entrega de adicionales tras validar el acceso ── */
+.scanner-page__addons {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--color-border);
+  text-align: left;
+}
+
+.scanner-page__addons-title {
+  font-size: 0.9rem;
+  margin: 0 0 10px;
+}
+
+.scanner-page__addon-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+  font-size: 0.9rem;
+}
+
+.scanner-page__addon-count {
+  color: var(--color-text-secondary, #9CA3AF);
+  font-size: 0.8rem;
+}
+
+.scanner-page__addon-btn {
+  background: var(--color-accent);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-weight: 700;
+  font-size: 0.8rem;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.scanner-page__addon-btn:disabled {
+  opacity: 0.6;
+}
