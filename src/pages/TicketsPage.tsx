@@ -118,6 +118,12 @@ export function TicketsPage() {
   const pendingTransfer = selected?.transfers?.find((t) => t.status === 'PENDING') ?? null;
   const isMine = selected?.holderUserId === user?.id;
   const isUnassignedOfMine = !selected?.holderUserId && selected?.purchaserUserId === user?.id;
+  // Se puede compartir una entrada comprada por mí, activa, que no tenga
+  // otro dueño (sin asignar o asignada a mí mismo).
+  const canShare =
+    selected?.purchaserUserId === user?.id &&
+    selected?.status === 'ACTIVE' &&
+    (!selected?.holderUserId || selected?.holderUserId === user?.id);
 
   return (
     <div className="tickets-page">
@@ -264,44 +270,55 @@ export function TicketsPage() {
               </div>
             )}
 
-            {isUnassignedOfMine && selected.status === 'ACTIVE' ? (
+            {canShare && pendingTransfer ? (
               <div className="tickets-page__unassigned">
-                {pendingTransfer ? (
-                  <>
-                    <div className="tickets-page__pending-badge">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
-                        <path d="M3 8l7.89 5.26a2 2 0 0 0 2.22 0L21 8M5 19h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2Z" />
-                      </svg>
-                      Enviada a {pendingTransfer.toEmail} · pendiente de aceptar
-                    </div>
-                    <button
-                      className="tickets-page__cancel-btn"
-                      onClick={() => handleCancelTransfer(pendingTransfer.id)}
-                      disabled={cancellingId === pendingTransfer.id}
-                    >
-                      {cancellingId === pendingTransfer.id ? 'Cancelando...' : 'Cancelar envío'}
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <p className="tickets-page__unassigned-text">Esta entrada todavía no está asignada.</p>
-                    <button className="tickets-page__share-btn" onClick={() => setSharingTicket(selected)}>
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
-                        <line x1="22" y1="2" x2="11" y2="13" />
-                        <polygon points="22 2 15 22 11 13 2 9 22 2" />
-                      </svg>
-                      Compartir por email
-                    </button>
-                  </>
-                )}
+                <div className="tickets-page__pending-badge">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
+                    <path d="M3 8l7.89 5.26a2 2 0 0 0 2.22 0L21 8M5 19h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2Z" />
+                  </svg>
+                  Enviada a {pendingTransfer.toEmail} · pendiente de aceptar
+                </div>
+                <button
+                  className="tickets-page__cancel-btn"
+                  onClick={() => handleCancelTransfer(pendingTransfer.id)}
+                  disabled={cancellingId === pendingTransfer.id}
+                >
+                  {cancellingId === pendingTransfer.id ? 'Cancelando...' : 'Cancelar envío'}
+                </button>
+              </div>
+            ) : isUnassignedOfMine && selected.status === 'ACTIVE' ? (
+              <div className="tickets-page__unassigned">
+                <p className="tickets-page__unassigned-text">Esta entrada todavía no está asignada.</p>
+                <button className="tickets-page__share-btn" onClick={() => setSharingTicket(selected)}>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
+                    <line x1="22" y1="2" x2="11" y2="13" />
+                    <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                  </svg>
+                  Compartir por email
+                </button>
               </div>
             ) : (
-              <QRDisplay
-                qrPayload={selected.qrPayload}
-                status={selected.status}
-                usedAt={selected.usedAt}
-                expiresAt={selected.expiresAt}
-              />
+              <>
+                <QRDisplay
+                  qrPayload={selected.qrPayload}
+                  status={selected.status}
+                  usedAt={selected.usedAt}
+                  expiresAt={selected.expiresAt}
+                />
+                {canShare && (
+                  <button
+                    className="tickets-page__share-btn"
+                    style={{ marginTop: 14 }}
+                    onClick={() => setSharingTicket(selected)}
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
+                      <line x1="22" y1="2" x2="11" y2="13" />
+                      <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                    </svg>
+                    ¿No vas vos? Compartila por email
+                  </button>
+                )}
+              </>
             )}
 
             {!isMine && !isUnassignedOfMine && (
