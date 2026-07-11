@@ -1,0 +1,72 @@
+/* Se muestra solo en desktop — en mobile el checkout usa la barra fija
+   inferior (.checkout-page__footer) en su lugar. Ver Layout.css/Checkout.css
+   para el toggle de .checkout-page__sidebar por breakpoint. */
+.cart-summary-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cart-summary-card--empty {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 24px;
+}
+
+.cart-summary-card__empty-text {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+.cart-summary-card__title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--color-text);
+  margin-bottom: 14px;
+}
+
+.cart-summary-card__lines {
+  display: flex;
+  flex-direction: column;
+}
+
+.cart-summary-card__line {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.85rem;
+}
+
+.cart-summary-card__line-label {
+  color: var(--color-text-secondary);
+}
+
+.cart-summary-card__line-value {
+  color: var(--color-text);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.cart-summary-card__total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-top: 14px;
+  margin: 6px 0 18px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.cart-summary-card__total-value {
+  font-weight: 900;
+  color: var(--color-accent);
+  font-size: 1.3rem;
+}

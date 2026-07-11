@@ -1,0 +1,191 @@
+.streaming-hub {
+  padding: 20px 16px;
+  animation: fadeIn 0.4s ease;
+}
+
+.streaming-hub__header {
+  margin-bottom: 20px;
+}
+
+.streaming-hub__title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.streaming-hub__subtitle {
+  margin: 6px 0 0;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  max-width: 560px;
+  line-height: 1.5;
+}
+
+.streaming-hub__empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+.streaming-hub__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+/* ─── Reproductor (overlay) ──────────────────────────────────────────────── */
+.streaming-hub__player-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(6, 6, 12, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 20px;
+  animation: fadeIn 0.2s ease;
+}
+
+.streaming-hub__player-box {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+}
+
+.streaming-hub__player-close {
+  position: absolute;
+  top: -44px;
+  right: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* ─── Tarjeta de contenido ────────────────────────────────────────────────── */
+.content-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  overflow: hidden;
+  animation: fadeSlideUp 0.4s ease both;
+}
+
+.content-card__media {
+  position: relative;
+  aspect-ratio: 2 / 1;
+  background: #181827;
+}
+
+.content-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.content-card__img--placeholder {
+  background: linear-gradient(135deg, #1E1E33 0%, #13131F 100%);
+}
+
+.content-card__badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+}
+
+.content-card__badge--free {
+  background: rgba(34, 197, 94, 0.9);
+  color: white;
+}
+
+.content-card__body {
+  padding: 14px 16px 16px;
+}
+
+.content-card__title {
+  margin: 0 0 4px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.content-card__meta {
+  margin: 0 0 4px;
+  font-size: 0.78rem;
+  color: var(--color-accent);
+}
+
+.content-card__desc {
+  margin: 0 0 10px;
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+.content-card__cta {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  font-size: 0.88rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 4px;
+}
+
+.content-card__cta:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.content-card__cta--primary {
+  background: linear-gradient(135deg, var(--color-accent) 0%, #7C3AED 100%);
+  color: white;
+}
+
+.content-card__cta--buy {
+  background: transparent;
+  border: 1.5px solid var(--color-accent);
+  color: var(--color-accent);
+}
+
+.content-card__cta--buy:hover {
+  background: rgba(167, 139, 250, 0.1);
+}
+
+.content-card__note {
+  margin-top: 4px;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+/* ─── Desktop: grid de varias columnas ───────────────────────────────────── */
+@media (min-width: 1024px) {
+  .streaming-hub {
+    padding: 40px 0 60px;
+  }
+
+  .streaming-hub__title {
+    font-size: 2rem;
+  }
+
+  .streaming-hub__grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+}

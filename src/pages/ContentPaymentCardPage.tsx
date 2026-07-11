@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ordersService } from '../services/ordersService';
+import { contentPurchasesService } from '../services/contentPurchasesService';
 import { tokenizeCard } from '../services/openpayClient';
 import { ApiError } from '../services/apiClient';
 import { ErrorBanner } from '../components/ErrorBanner';
 import { ENV } from '../config/env';
 import './Checkout.css';
 
-export function CheckoutPaymentCardPage() {
-  const { orderId } = useParams<{ orderId: string }>();
+export function ContentPaymentCardPage() {
+  const { purchaseId } = useParams<{ purchaseId: string }>();
   const navigate = useNavigate();
 
   const [cardNumber, setCardNumber] = useState('');
@@ -19,7 +19,7 @@ export function CheckoutPaymentCardPage() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  if (!orderId) return null;
+  if (!purchaseId) return null;
 
   const handlePay = async () => {
     setSubmitting(true);
@@ -32,8 +32,8 @@ export function CheckoutPaymentCardPage() {
         expirationYear: expYear,
         cvv2: cvv,
       });
-      await ordersService.payCard(orderId, cardToken, deviceSessionId);
-      navigate(`/checkout/confirmacion/${orderId}`);
+      await contentPurchasesService.payCard(purchaseId, cardToken, deviceSessionId);
+      navigate(`/streaming/confirmacion/${purchaseId}`);
     } catch (e) {
       setError(e instanceof ApiError ? e.message : e instanceof Error ? e.message : 'Error al procesar el pago.');
     } finally {

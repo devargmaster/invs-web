@@ -10,6 +10,7 @@ interface AuthContextValue {
   isLoading: boolean;
   error: string | null;
   login: (email: string, password: string) => Promise<void>;
+  loginWithGoogle: (idToken: string) => Promise<void>;
   logout: () => Promise<void>;
   refreshSession: () => Promise<void>;
 }
@@ -52,6 +53,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
+  const loginWithGoogle = useCallback(async (idToken: string) => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const res = await authService.loginWithGoogle(idToken);
+      setUser(res.user);
+    } catch (e) {
+      const msg = e instanceof ApiError ? e.message : 'Error al iniciar sesión con Google.';
+      setError(msg);
+      throw e;
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
   const logout = useCallback(async () => {
     setIsLoading(true);
     try {
@@ -80,6 +96,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         isLoading,
         error,
         login,
+        loginWithGoogle,
         logout,
         refreshSession,
       }}

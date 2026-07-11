@@ -7,6 +7,26 @@
   animation: fadeIn 0.4s ease;
 }
 
+/* ─── Layout de dos columnas (desktop) / apilado con barra fija (mobile) ───── */
+.checkout-page__layout {
+  display: block;
+}
+
+.checkout-page__main {
+  min-width: 0;
+}
+
+/* Panel lateral sticky — solo existe visualmente en desktop */
+.checkout-page__sidebar {
+  display: none;
+}
+
+/* Recap de ítems inline y botón de confirmar — solo para mobile, en desktop
+   esa info y esa acción viven en el panel lateral (CartSummaryCard) */
+.checkout-page__mobile-confirm {
+  margin-top: 20px;
+}
+
 .checkout-page__header {
   margin-bottom: 20px;
 }
@@ -472,4 +492,48 @@
   padding: 60px 20px;
   color: var(--color-text-muted);
   font-size: 0.9rem;
+}
+
+/* ─── Desktop: dos columnas con panel de resumen sticky ─────────────────────── */
+@media (min-width: 1024px) {
+  .checkout-page {
+    padding: 40px 0 60px;
+  }
+
+  .checkout-page__title {
+    font-size: 1.6rem;
+  }
+
+  .checkout-page__layout {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 48px;
+    align-items: start;
+  }
+
+  .checkout-page__sidebar {
+    display: block;
+    position: sticky;
+    top: 100px; /* debajo de la navbar sticky del Layout */
+  }
+
+  /* La barra fija de abajo y el recap/botón inline de mobile quedan
+     reemplazados por el panel lateral en desktop. */
+  .checkout-page__footer {
+    display: none;
+  }
+
+  .checkout-summary-recap-mobile,
+  .checkout-page__mobile-confirm {
+    display: none;
+  }
+
+  /* Páginas de un solo paso sin panel lateral (pago con tarjeta,
+     transferencia, confirmación) — centradas con ancho cómodo de lectura
+     en vez de ancho completo de 1280px. */
+  .checkout-page--narrow,
+  .checkout-page:has(.checkout-confirm) {
+    max-width: 560px;
+    margin: 0 auto;
+  }
 }

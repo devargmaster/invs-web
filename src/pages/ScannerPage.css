@@ -3,6 +3,18 @@
   animation: fadeIn 0.4s ease;
 }
 
+@media (min-width: 1024px) {
+  .scanner-page {
+    padding: 40px 0 60px;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .scanner-page__title {
+    font-size: 2rem;
+  }
+}
+
 .scanner-page--locked {
   display: flex;
   flex-direction: column;

@@ -10,4 +10,7 @@ export const ENV = {
   // lado del cliente para tokenizar la tarjeta. Sin esto configurado, el
   // pago con tarjeta muestra un error claro en vez de fallar en silencio.
   OPENPAY_PUBLIC_KEY: import.meta.env.VITE_OPENPAY_PUBLIC_KEY || '',
+  // Client ID de Google (no es secreto) — mismo que usa el backend como
+  // audience. Sin esto configurado, el botón de Google no se muestra.
+  GOOGLE_CLIENT_ID: import.meta.env.VITE_GOOGLE_CLIENT_ID || '',
 };

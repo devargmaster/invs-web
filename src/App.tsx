@@ -16,6 +16,11 @@ import { CheckoutPaymentCardPage } from './pages/CheckoutPaymentCardPage';
 import { CheckoutTransferPage } from './pages/CheckoutTransferPage';
 import { OrderConfirmationPage } from './pages/OrderConfirmationPage';
 import { AcceptTransferPage } from './pages/AcceptTransferPage';
+import { StreamingHubPage } from './pages/StreamingHubPage';
+import { ContentCheckoutPage } from './pages/ContentCheckoutPage';
+import { ContentPaymentCardPage } from './pages/ContentPaymentCardPage';
+import { ContentTransferPage } from './pages/ContentTransferPage';
+import { ContentPurchaseConfirmationPage } from './pages/ContentPurchaseConfirmationPage';
 
 export default function App() {
   return (
@@ -44,6 +49,11 @@ export default function App() {
               <Route path="/checkout/transferencia/:orderId" element={<CheckoutTransferPage />} />
               <Route path="/checkout/confirmacion/:orderId" element={<OrderConfirmationPage />} />
               <Route path="/entradas" element={<TicketsPage />} />
+              <Route path="/streaming" element={<StreamingHubPage />} />
+              <Route path="/streaming/comprar" element={<ContentCheckoutPage />} />
+              <Route path="/streaming/pago/:purchaseId" element={<ContentPaymentCardPage />} />
+              <Route path="/streaming/transferencia/:purchaseId" element={<ContentTransferPage />} />
+              <Route path="/streaming/confirmacion/:purchaseId" element={<ContentPurchaseConfirmationPage />} />
               <Route path="/staff/scanner" element={<ScannerPage />} />
               <Route path="/perfil" element={<ProfilePage />} />
             </Route>

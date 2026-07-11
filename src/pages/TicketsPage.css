@@ -3,6 +3,22 @@
   animation: fadeIn 0.4s ease;
 }
 
+@media (min-width: 1024px) {
+  .tickets-page {
+    padding: 40px 0 60px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .tickets-page__title {
+    font-size: 2rem;
+  }
+
+  .tickets-page__grid {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  }
+}
+
 .tickets-page--empty {
   display: flex;
   flex-direction: column;
@@ -32,43 +48,219 @@
   margin: 0;
 }
 
-/* ─── Tabs ──────────────────────────────────────────────────────────────────── */
-.tickets-page__tabs {
+.tickets-page__subtitle {
+  margin: -12px 0 20px;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+  max-width: 520px;
+}
+
+/* ─── Tabs (Próximos / Anteriores / Reservas) ───────────────────────────────── */
+.tickets-page__tabbar {
   display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  padding-bottom: 8px;
-  margin-bottom: 20px;
-  scrollbar-width: none;
+  gap: 24px;
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 24px;
 }
 
-.tickets-page__tabs::-webkit-scrollbar {
-  display: none;
-}
-
-.tickets-page__tab {
-  flex-shrink: 0;
-  padding: 8px 16px;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 20px;
+.tickets-page__tabbtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 0 12px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
   color: var(--color-text-muted);
   font-size: 0.8rem;
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: 0.4px;
   font-family: inherit;
   cursor: pointer;
   transition: all 0.2s ease;
-  white-space: nowrap;
 }
 
-.tickets-page__tab--active {
-  background: rgba(167, 139, 250, 0.12);
-  border-color: var(--color-accent);
+.tickets-page__tabbtn:hover {
+  color: var(--color-text-secondary);
+}
+
+.tickets-page__tabbtn--active {
   color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
 }
 
-.tickets-page__tab:hover:not(.tickets-page__tab--active) {
-  border-color: rgba(167, 139, 250, 0.3);
+.tickets-page__tabbtn-count {
+  background: rgba(167, 139, 250, 0.15);
+  color: var(--color-accent);
+  border-radius: 10px;
+  padding: 1px 7px;
+  font-size: 0.7rem;
+}
+
+.tickets-page__tab-empty {
+  padding: 50px 20px;
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+/* ─── Grid de tarjetas de compra ─────────────────────────────────────────────── */
+.tickets-page__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.ticket-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  overflow: hidden;
+  animation: fadeSlideUp 0.4s ease both;
+}
+
+.ticket-card__media {
+  position: relative;
+  aspect-ratio: 2 / 1;
+}
+
+.ticket-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ticket-card__badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  backdrop-filter: blur(6px);
+}
+
+.ticket-card__badge--ok {
+  background: rgba(34, 197, 94, 0.85);
+  color: white;
+}
+
+.ticket-card__badge--warning {
+  background: rgba(251, 191, 36, 0.9);
+  color: #241C00;
+}
+
+.ticket-card__badge--muted {
+  background: rgba(20, 20, 30, 0.85);
+  color: var(--color-text-muted);
+}
+
+.ticket-card__body {
+  padding: 14px 16px 16px;
+}
+
+.ticket-card__title {
+  margin: 0 0 4px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.ticket-card__meta {
+  margin: 0 0 3px;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.ticket-card__cta {
+  width: 100%;
+  margin-top: 12px;
+  padding: 11px;
+  background: transparent;
+  border: 1.5px solid var(--color-accent);
+  border-radius: 10px;
+  color: var(--color-accent);
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ticket-card__cta:hover {
+  background: rgba(167, 139, 250, 0.1);
+}
+
+/* ─── Modal de detalle de entrada ─────────────────────────────────────────────── */
+.ticket-detail__backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(6, 6, 12, 0.7);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 100;
+  animation: fadeIn 0.2s ease;
+}
+
+.ticket-detail__sheet {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  max-height: 88vh;
+  overflow-y: auto;
+  background: #14141F;
+  border-top: 1px solid #2a2a3d;
+  border-radius: 26px 26px 0 0;
+  padding: 22px 20px calc(26px + env(safe-area-inset-bottom, 0px));
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: slideUp 0.25s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(24px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.ticket-detail__handle {
+  width: 40px;
+  height: 4px;
+  border-radius: 2px;
+  background: #33334a;
+  margin: 0 auto 4px;
+}
+
+.ticket-detail__close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--color-text-muted);
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+@media (min-width: 1024px) {
+  .ticket-detail__backdrop {
+    align-items: center;
+  }
+
+  .ticket-detail__sheet {
+    border-radius: 24px;
+    max-width: 420px;
+  }
 }
 
 /* ─── Event Card ────────────────────────────────────────────────────────────── */

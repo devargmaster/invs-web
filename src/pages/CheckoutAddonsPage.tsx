@@ -5,6 +5,7 @@ import { ApiError } from '../services/apiClient';
 import { useCheckout } from '../context/CheckoutContext';
 import { LoadingSpinner } from '../components/LoadingSpinner';
 import { ErrorBanner } from '../components/ErrorBanner';
+import { CartSummaryCard } from '../components/CartSummaryCard';
 import { formatMoney } from '../utils/formatters';
 import type { AddOn, AddonVariant } from '../types/checkout';
 import './Checkout.css';
@@ -60,61 +61,69 @@ export function CheckoutAddonsPage() {
 
   return (
     <div className="checkout-page">
-      <div className="checkout-page__header">
-        <span className="checkout-page__step">Paso 2 de 3</span>
-        <h1 className="checkout-page__title">Sumá adicionales</h1>
-        <p className="checkout-page__subtitle">Decorá tu experiencia — es opcional, podés continuar sin elegir nada.</p>
-      </div>
+      <div className="checkout-page__layout">
+        <div className="checkout-page__main">
+          <div className="checkout-page__header">
+            <span className="checkout-page__step">Paso 2 de 3</span>
+            <h1 className="checkout-page__title">Sumá adicionales</h1>
+            <p className="checkout-page__subtitle">Decorá tu experiencia — es opcional, podés continuar sin elegir nada.</p>
+          </div>
 
-      {addons.length === 0 ? (
-        <div className="checkout-empty">Este evento no tiene adicionales configurados.</div>
-      ) : (
-        addons.map((addon) => {
-          const variant = addon.hasVariants ? selectedVariant[addon.id] ?? addon.variants[0] : null;
-          const qty = quantityOf(addon, variant);
-          return (
-            <div className="checkout-item" key={addon.id}>
-              <div className="checkout-item__info">
-                <div className="checkout-item__name">{addon.name}</div>
-                {addon.description && <div className="checkout-item__desc">{addon.description}</div>}
-                <div className="checkout-item__price">{formatMoney(addon.priceCents, addon.currency)}</div>
+          {addons.length === 0 ? (
+            <div className="checkout-empty">Este evento no tiene adicionales configurados.</div>
+          ) : (
+            addons.map((addon) => {
+              const variant = addon.hasVariants ? selectedVariant[addon.id] ?? addon.variants[0] : null;
+              const qty = quantityOf(addon, variant);
+              return (
+                <div className="checkout-item" key={addon.id}>
+                  <div className="checkout-item__info">
+                    <div className="checkout-item__name">{addon.name}</div>
+                    {addon.description && <div className="checkout-item__desc">{addon.description}</div>}
+                    <div className="checkout-item__price">{formatMoney(addon.priceCents, addon.currency)}</div>
 
-                {addon.hasVariants && addon.variants.length > 0 && (
-                  <div className="checkout-variants">
-                    {addon.variants.map((v) => (
-                      <button
-                        key={v.id}
-                        className={`checkout-variant-chip ${variant?.id === v.id ? 'checkout-variant-chip--active' : ''}`}
-                        onClick={() => setSelectedVariant((prev) => ({ ...prev, [addon.id]: v }))}
-                      >
-                        {v.label}
-                      </button>
-                    ))}
+                    {addon.hasVariants && addon.variants.length > 0 && (
+                      <div className="checkout-variants">
+                        {addon.variants.map((v) => (
+                          <button
+                            key={v.id}
+                            className={`checkout-variant-chip ${variant?.id === v.id ? 'checkout-variant-chip--active' : ''}`}
+                            onClick={() => setSelectedVariant((prev) => ({ ...prev, [addon.id]: v }))}
+                          >
+                            {v.label}
+                          </button>
+                        ))}
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
-              <div className="checkout-stepper">
-                <button
-                  className="checkout-stepper__btn"
-                  onClick={() => setAddonQuantity(addon, variant ?? null, Math.max(0, qty - 1))}
-                  disabled={qty === 0}
-                  aria-label="Restar"
-                >
-                  −
-                </button>
-                <span className="checkout-stepper__count">{qty}</span>
-                <button
-                  className="checkout-stepper__btn"
-                  onClick={() => setAddonQuantity(addon, variant ?? null, qty + 1)}
-                  aria-label="Sumar"
-                >
-                  +
-                </button>
-              </div>
-            </div>
-          );
-        })
-      )}
+                  <div className="checkout-stepper">
+                    <button
+                      className="checkout-stepper__btn"
+                      onClick={() => setAddonQuantity(addon, variant ?? null, Math.max(0, qty - 1))}
+                      disabled={qty === 0}
+                      aria-label="Restar"
+                    >
+                      −
+                    </button>
+                    <span className="checkout-stepper__count">{qty}</span>
+                    <button
+                      className="checkout-stepper__btn"
+                      onClick={() => setAddonQuantity(addon, variant ?? null, qty + 1)}
+                      aria-label="Sumar"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              );
+            })
+          )}
+        </div>
+
+        <aside className="checkout-page__sidebar">
+          <CartSummaryCard continueLabel="Continuar" onContinue={handleContinue} />
+        </aside>
+      </div>
 
       <div className="checkout-page__footer">
         <div className="checkout-page__footer-total">

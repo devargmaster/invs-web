@@ -12,5 +12,10 @@ export interface Event {
   coverImageUrl: string | null;
   maxCapacity: number | null;
   isLive: boolean;
+  // Acceso al streaming en vivo — combinable (ver ContentAccessService en el backend)
+  liveIsFree: boolean;
+  liveIncludedInSubscription: boolean;
+  livePriceCents: number | null;
+  liveCurrency: string;
   _count?: { tickets: number };
 }

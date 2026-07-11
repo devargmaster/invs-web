@@ -1,12 +1,14 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { ErrorBanner } from '../components/ErrorBanner';
+import { GoogleLoginButton } from '../components/GoogleLoginButton';
+import { ENV } from '../config/env';
 import './LoginPage.css';
 
 export function LoginPage() {
   const navigate = useNavigate();
-  const { login, isLoading, error } = useAuth();
+  const { login, loginWithGoogle, isLoading, error } = useAuth();
   const [email, setEmail] = useState('demo@invs.app');
   const [password, setPassword] = useState('Demo123!');
 
@@ -19,6 +21,15 @@ export function LoginPage() {
       // error ya seteado en el context
     }
   };
+
+  const handleGoogleCredential = useCallback(async (idToken: string) => {
+    try {
+      await loginWithGoogle(idToken);
+      navigate('/eventos', { replace: true });
+    } catch {
+      // error ya seteado en el context
+    }
+  }, [loginWithGoogle, navigate]);
 
   return (
     <div className="login-page">
@@ -71,6 +82,14 @@ export function LoginPage() {
             'Ingresar'
           )}
         </button>
+
+        {ENV.GOOGLE_CLIENT_ID && (
+          <div className="login-page__divider">
+            <span>o</span>
+          </div>
+        )}
+
+        <GoogleLoginButton onCredential={handleGoogleCredential} />
 
         <p className="login-page__footer-note">
           Plataforma INVS — Acceso web

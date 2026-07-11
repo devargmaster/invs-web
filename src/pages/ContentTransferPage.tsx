@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { contentPurchasesService } from '../services/contentPurchasesService';
 import { ordersService } from '../services/ordersService';
 import type { BankTransferInfo } from '../services/ordersService';
 import { ApiError } from '../services/apiClient';
@@ -7,8 +8,8 @@ import { LoadingSpinner } from '../components/LoadingSpinner';
 import { ErrorBanner } from '../components/ErrorBanner';
 import './Checkout.css';
 
-export function CheckoutTransferPage() {
-  const { orderId } = useParams<{ orderId: string }>();
+export function ContentTransferPage() {
+  const { purchaseId } = useParams<{ purchaseId: string }>();
   const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -20,21 +21,22 @@ export function CheckoutTransferPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    // Mismos datos bancarios que el checkout de entradas — es la misma cuenta.
     ordersService.getBankTransferInfo()
       .then(setBankInfo)
       .catch((e) => setError(e instanceof ApiError ? e.message : 'Error cargando datos bancarios.'))
       .finally(() => setLoading(false));
   }, []);
 
-  if (!orderId) return null;
+  if (!purchaseId) return null;
 
   const handleSubmit = async () => {
     if (!file) return;
     setSubmitting(true);
     setError(null);
     try {
-      await ordersService.uploadTransferProof(orderId, file, reference || undefined);
-      navigate(`/checkout/confirmacion/${orderId}`);
+      await contentPurchasesService.uploadTransferProof(purchaseId, file, reference || undefined);
+      navigate(`/streaming/confirmacion/${purchaseId}`);
     } catch (e) {
       setError(e instanceof ApiError ? e.message : 'Error al subir el comprobante.');
     } finally {
@@ -50,7 +52,7 @@ export function CheckoutTransferPage() {
         <span className="checkout-page__step">Pago por transferencia</span>
         <h1 className="checkout-page__title">Datos para transferir</h1>
         <p className="checkout-page__subtitle">
-          Tus entradas quedan pendientes hasta que validemos el pago — te avisamos por mail.
+          El acceso queda pendiente hasta que validemos el pago — te avisamos por mail.
         </p>
       </div>
 

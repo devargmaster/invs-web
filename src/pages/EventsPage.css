@@ -61,3 +61,20 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+/* ─── Desktop: grid de tarjetas en vez de columna única ─────────────────────── */
+@media (min-width: 1024px) {
+  .events-page {
+    padding: 40px 0 60px;
+  }
+
+  .events-page__title {
+    font-size: 2rem;
+  }
+
+  .events-page__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+}

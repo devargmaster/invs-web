@@ -2,18 +2,77 @@
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
-  max-width: 480px;
-  margin: 0 auto;
   position: relative;
+}
+
+.layout__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .layout__main {
   flex: 1;
   overflow-y: auto;
-  padding-bottom: 72px; /* space for nav */
+  padding-bottom: 72px; /* espacio para la tab bar de mobile */
 }
 
-/* ─── Bottom Navigation ─────────────────────────────────────────────────────── */
+.layout__content {
+  width: 100%;
+}
+
+/* ─── Navbar de escritorio (oculta en mobile) ───────────────────────────────── */
+.layout__topbar {
+  display: none;
+}
+
+.layout__logo {
+  font-size: 1.3rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: var(--color-text);
+}
+
+.layout__topnav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.topnav-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border-radius: 10px;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.topnav-link__icon {
+  display: flex;
+  width: 18px;
+  height: 18px;
+}
+
+.topnav-link__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.topnav-link:hover {
+  color: var(--color-text);
+  background: rgba(167, 139, 250, 0.08);
+}
+
+.topnav-link--active {
+  color: var(--color-accent);
+  background: rgba(167, 139, 250, 0.12);
+}
+
+/* ─── Tab bar de mobile ──────────────────────────────────────────────────────── */
 .layout__nav {
   position: fixed;
   bottom: 0;
@@ -46,10 +105,16 @@
 }
 
 .nav-tab__icon {
+  display: flex;
   width: 22px;
   height: 22px;
   color: var(--color-text-muted);
   transition: color 0.2s ease;
+}
+
+.nav-tab__icon svg {
+  width: 100%;
+  height: 100%;
 }
 
 .nav-tab__label {
@@ -72,12 +137,40 @@
   transform: scale(0.92);
 }
 
-/* ─── Desktop enhancements ──────────────────────────────────────────────────── */
-@media (min-width: 768px) {
-  .layout {
-    max-width: 480px;
-    box-shadow: 0 0 80px rgba(167, 139, 250, 0.05);
-    border-left: 1px solid var(--color-border);
-    border-right: 1px solid var(--color-border);
+/* ─── Desktop (≥1024px): navbar arriba, sin tab bar, contenido ancho ────────── */
+@media (min-width: 1024px) {
+  .layout__topbar {
+    display: block;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(11, 11, 18, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .layout__topbar-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 16px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+  }
+
+  .layout__nav {
+    display: none;
+  }
+
+  .layout__main {
+    padding-bottom: 0;
+  }
+
+  .layout__content {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 40px;
   }
 }
