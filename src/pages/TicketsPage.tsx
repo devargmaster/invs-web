@@ -1,18 +1,21 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { ticketsService } from '../services/ticketsService';
+import { ordersService } from '../services/ordersService';
 import { ApiError } from '../services/apiClient';
 import { useAuth } from '../context/AuthContext';
 import { ErrorBanner } from '../components/ErrorBanner';
 import { LoadingSpinner } from '../components/LoadingSpinner';
 import { QRDisplay } from '../components/QRDisplay';
 import { ShareTicketModal } from '../components/ShareTicketModal';
-import { formatDate } from '../utils/formatters';
+import { formatDate, formatMoney } from '../utils/formatters';
 import type { Ticket } from '../types/tickets';
+import type { Order, OrderStatus } from '../types/checkout';
 import './TicketsPage.css';
 
-type Tab = 'proximos' | 'anteriores' | 'reservas';
+type TicketTab = 'proximos' | 'anteriores' | 'reservas';
+type Tab = TicketTab | 'pedidos';
 
-function classify(ticket: Ticket): Tab {
+function classify(ticket: Ticket): TicketTab {
   if (ticket.status === 'PENDING_PAYMENT') return 'reservas';
   if (ticket.status === 'USED' || ticket.status === 'CANCELLED') return 'anteriores';
   if (ticket.event && new Date(ticket.event.date).getTime() < Date.now()) return 'anteriores';
@@ -23,11 +26,20 @@ const TAB_LABEL: Record<Tab, string> = {
   proximos: 'Próximos',
   anteriores: 'Anteriores',
   reservas: 'Reservas',
+  pedidos: 'Pedidos',
+};
+
+const ORDER_STATUS_LABEL: Record<OrderStatus, { label: string; tone: 'ok' | 'warning' | 'muted' }> = {
+  PAID: { label: 'Pagada', tone: 'ok' },
+  PENDING_PAYMENT: { label: 'Pago pendiente', tone: 'warning' },
+  FAILED: { label: 'Falló el pago', tone: 'muted' },
+  CANCELLED: { label: 'Cancelada', tone: 'muted' },
 };
 
 export function TicketsPage() {
   const { user } = useAuth();
   const [tickets, setTickets] = useState<Ticket[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<Tab>('proximos');
@@ -39,9 +51,13 @@ export function TicketsPage() {
   const load = useCallback(async () => {
     setError(null);
     try {
-      const data = await ticketsService.getMyTickets();
-      setTickets(data);
-      setSelected((prev) => (prev ? data.find((t) => t.id === prev.id) ?? null : null));
+      const [ticketsData, ordersData] = await Promise.all([
+        ticketsService.getMyTickets(),
+        ordersService.getMyOrders(),
+      ]);
+      setTickets(ticketsData);
+      setOrders(ordersData);
+      setSelected((prev) => (prev ? ticketsData.find((t) => t.id === prev.id) ?? null : null));
     } catch (e) {
       setError(e instanceof ApiError ? e.message : 'Error cargando tickets.');
     } finally {
@@ -52,10 +68,12 @@ export function TicketsPage() {
   useEffect(() => { load(); }, [load]);
 
   const grouped = useMemo(() => {
-    const g: Record<Tab, Ticket[]> = { proximos: [], anteriores: [], reservas: [] };
+    const g: Record<TicketTab, Ticket[]> = { proximos: [], anteriores: [], reservas: [] };
     for (const t of tickets) g[classify(t)].push(t);
     return g;
   }, [tickets]);
+
+  const tabCount = (tab: Tab) => (tab === 'pedidos' ? orders.length : grouped[tab].length);
 
   const handleCancelTransfer = async (transferId: string) => {
     setCancellingId(transferId);
@@ -81,7 +99,7 @@ export function TicketsPage() {
     );
   }
 
-  if (tickets.length === 0) {
+  if (tickets.length === 0 && orders.length === 0) {
     return (
       <div className="tickets-page tickets-page--empty">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="64" height="64" style={{ color: 'var(--color-border)' }}>
@@ -96,7 +114,7 @@ export function TicketsPage() {
     );
   }
 
-  const list = grouped[activeTab];
+  const list = activeTab === 'pedidos' ? [] : grouped[activeTab];
   const pendingTransfer = selected?.transfers?.find((t) => t.status === 'PENDING') ?? null;
   const isMine = selected?.holderUserId === user?.id;
   const isUnassignedOfMine = !selected?.holderUserId && selected?.purchaserUserId === user?.id;
@@ -109,19 +127,65 @@ export function TicketsPage() {
       </p>
 
       <div className="tickets-page__tabbar">
-        {(['proximos', 'anteriores', 'reservas'] as Tab[]).map((tab) => (
+        {(['proximos', 'anteriores', 'reservas', 'pedidos'] as Tab[]).map((tab) => (
           <button
             key={tab}
             className={`tickets-page__tabbtn ${activeTab === tab ? 'tickets-page__tabbtn--active' : ''}`}
             onClick={() => setActiveTab(tab)}
           >
             {TAB_LABEL[tab].toUpperCase()}
-            {grouped[tab].length > 0 && <span className="tickets-page__tabbtn-count">{grouped[tab].length}</span>}
+            {tabCount(tab) > 0 && <span className="tickets-page__tabbtn-count">{tabCount(tab)}</span>}
           </button>
         ))}
       </div>
 
-      {list.length === 0 ? (
+      {activeTab === 'pedidos' ? (
+        orders.length === 0 ? (
+          <div className="tickets-page__tab-empty">Todavía no hiciste ninguna compra.</div>
+        ) : (
+          <div className="tickets-page__orders">
+            {orders.map((o) => {
+              const status = ORDER_STATUS_LABEL[o.status];
+              const ticketCount = o.tickets?.length ?? 0;
+              return (
+                <article className="order-card" key={o.id}>
+                  <header className="order-card__head">
+                    <div>
+                      <h3 className="order-card__title">{o.event?.title ?? 'Evento'}</h3>
+                      <p className="order-card__meta">Compra del {formatDate(o.createdAt)}</p>
+                    </div>
+                    <span className={`ticket-card__badge ticket-card__badge--${status.tone} order-card__badge`}>
+                      {status.label}
+                    </span>
+                  </header>
+                  <ul className="order-card__items">
+                    {ticketCount > 0 && (
+                      <li className="order-card__item">
+                        <span>{ticketCount}× {ticketCount === 1 ? 'Entrada' : 'Entradas'}</span>
+                      </li>
+                    )}
+                    {o.addons?.map((a) => (
+                      <li className="order-card__item" key={a.id}>
+                        <span>
+                          {a.quantity}× {a.addon?.name ?? 'Adicional'}
+                          {a.variant ? ` — ${a.variant.label}` : ''}
+                        </span>
+                        <span className="order-card__price">
+                          {formatMoney(a.unitPriceCents * a.quantity, o.currency)}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                  <footer className="order-card__total">
+                    <span>Total</span>
+                    <strong>{formatMoney(o.totalCents, o.currency)}</strong>
+                  </footer>
+                </article>
+              );
+            })}
+          </div>
+        )
+      ) : list.length === 0 ? (
         <div className="tickets-page__tab-empty">No tenés entradas en "{TAB_LABEL[activeTab]}".</div>
       ) : (
         <div className="tickets-page__grid">

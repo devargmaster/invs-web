@@ -73,6 +73,7 @@ export interface Order {
   createdAt: string;
   tickets?: { id: string; categoryId: string; status: string }[];
   addons?: OrderAddon[];
+  event?: { id: string; title: string; date: string; location: string | null };
 }
 
 // ─── Carrito (estado local, antes de crear la orden) ──────────────
