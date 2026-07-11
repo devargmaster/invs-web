@@ -96,24 +96,32 @@ export function CheckoutAddonsPage() {
                       </div>
                     )}
                   </div>
-                  <div className="checkout-stepper">
+                  {qty === 0 ? (
                     <button
-                      className="checkout-stepper__btn"
-                      onClick={() => setAddonQuantity(addon, variant ?? null, Math.max(0, qty - 1))}
-                      disabled={qty === 0}
-                      aria-label="Restar"
+                      className="checkout-add-btn"
+                      onClick={() => setAddonQuantity(addon, variant ?? null, 1)}
                     >
-                      −
+                      Agregar
                     </button>
-                    <span className="checkout-stepper__count">{qty}</span>
-                    <button
-                      className="checkout-stepper__btn"
-                      onClick={() => setAddonQuantity(addon, variant ?? null, qty + 1)}
-                      aria-label="Sumar"
-                    >
-                      +
-                    </button>
-                  </div>
+                  ) : (
+                    <div className="checkout-stepper">
+                      <button
+                        className="checkout-stepper__btn"
+                        onClick={() => setAddonQuantity(addon, variant ?? null, Math.max(0, qty - 1))}
+                        aria-label="Restar"
+                      >
+                        −
+                      </button>
+                      <span className="checkout-stepper__count">{qty}</span>
+                      <button
+                        className="checkout-stepper__btn"
+                        onClick={() => setAddonQuantity(addon, variant ?? null, qty + 1)}
+                        aria-label="Sumar"
+                      >
+                        +
+                      </button>
+                    </div>
+                  )}
                 </div>
               );
             })

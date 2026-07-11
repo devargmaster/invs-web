@@ -537,3 +537,21 @@
     margin: 0 auto;
   }
 }
+
+/* Botón "Agregar" de adicionales — reemplaza al stepper mientras qty=0,
+   para que elegir un talle sin agregar no parezca suficiente. */
+.checkout-add-btn {
+  background: var(--color-accent);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 20px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.checkout-add-btn:hover {
+  background: var(--color-accent-hover);
+}
