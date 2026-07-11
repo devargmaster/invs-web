@@ -204,7 +204,7 @@
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  z-index: 100;
+  z-index: 200; /* por encima de la tab bar de mobile (z-index 100) */
   animation: fadeIn 0.2s ease;
 }
 
@@ -212,7 +212,8 @@
   position: relative;
   width: 100%;
   max-width: 480px;
-  max-height: 88vh;
+  max-height: 88vh; /* fallback */
+  max-height: 88dvh;
   overflow-y: auto;
   background: #14141F;
   border-top: 1px solid #2a2a3d;
