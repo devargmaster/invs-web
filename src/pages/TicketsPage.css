@@ -459,3 +459,8 @@
     align-items: start;
   }
 }
+
+.ticket-card__meta--dim {
+  font-size: 0.72rem;
+  opacity: 0.7;
+}

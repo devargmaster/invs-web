@@ -229,6 +229,9 @@ export function TicketsPage() {
                   <h3 className="ticket-card__title">{t.event?.title ?? 'Evento'}</h3>
                   {t.event && <p className="ticket-card__meta">{formatDate(t.event.date)}</p>}
                   {t.event?.location && <p className="ticket-card__meta">📍 {t.event.location}</p>}
+                  <p className="ticket-card__meta ticket-card__meta--dim">
+                    Comprada el {formatDate(t.createdAt)} · #{t.id.slice(0, 8).toUpperCase()}
+                  </p>
                   <button className="ticket-card__cta" onClick={() => setSelected(t)}>
                     Ver entrada
                   </button>
@@ -265,10 +268,13 @@ export function TicketsPage() {
             )}
 
             {selected.category && (
-              <div className="tickets-page__event-meta" style={{ marginBottom: 10 }}>
+              <div className="tickets-page__event-meta" style={{ marginBottom: 2 }}>
                 Categoría: {selected.category.name}
               </div>
             )}
+            <div className="tickets-page__event-meta" style={{ marginBottom: 10 }}>
+              Comprada el {formatDate(selected.createdAt)} · #{selected.id.slice(0, 8).toUpperCase()}
+            </div>
 
             {canShare && pendingTransfer ? (
               <div className="tickets-page__unassigned">
