@@ -9,8 +9,8 @@ import './LoginPage.css';
 export function LoginPage() {
   const navigate = useNavigate();
   const { login, loginWithGoogle, isLoading, error } = useAuth();
-  const [email, setEmail] = useState('demo@invs.app');
-  const [password, setPassword] = useState('Demo123!');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
