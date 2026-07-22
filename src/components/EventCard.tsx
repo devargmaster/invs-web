@@ -20,7 +20,7 @@ export function EventCard({ event }: EventCardProps) {
     >
       <div className="event-card__image-wrapper">
         <img
-          src={`https://picsum.photos/seed/${event.id}/600/300`}
+          src={event.coverImageUrl}
           alt={event.title}
           className="event-card__image"
           loading="lazy"

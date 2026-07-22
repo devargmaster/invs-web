@@ -152,7 +152,7 @@ export function EventDetailPage() {
           {/* Hero image */}
           <div className="detail-page__hero">
             <img
-              src={`https://picsum.photos/seed/${event.id}/800/400`}
+              src={event.coverImageUrl}
               alt={event.title}
               className="detail-page__hero-img"
             />

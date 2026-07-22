@@ -9,7 +9,7 @@ export interface Event {
   location: string | null;
   mode: EventMode;
   status: EventStatus;
-  coverImageUrl: string | null;
+  coverImageUrl: string;
   maxCapacity: number | null;
   isLive: boolean;
   // Acceso al streaming en vivo — combinable (ver ContentAccessService en el backend)
