@@ -41,7 +41,7 @@ export interface AddOn {
   variants: AddonVariant[];
 }
 
-export type PaymentMethod = 'CARD_OPENPAY' | 'BANK_TRANSFER';
+export type PaymentMethod = 'CARD_OPENPAY' | 'BANK_TRANSFER' | 'MERCADOPAGO';
 export type OrderStatus = 'PENDING_PAYMENT' | 'PAID' | 'FAILED' | 'CANCELLED';
 
 export interface OrderAddon {

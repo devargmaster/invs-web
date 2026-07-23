@@ -24,7 +24,7 @@ export interface RecordingWithAccess {
 }
 
 export type ContentPurchaseStatus = 'PENDING_PAYMENT' | 'PAID' | 'FAILED' | 'CANCELLED';
-export type PaymentMethod = 'CARD_OPENPAY' | 'BANK_TRANSFER';
+export type PaymentMethod = 'CARD_OPENPAY' | 'BANK_TRANSFER' | 'MERCADOPAGO';
 
 export interface ContentPurchase {
   id: string;

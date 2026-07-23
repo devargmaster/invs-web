@@ -18,6 +18,10 @@ export const ordersService = {
     return apiClient.post<Order>(`/orders/${orderId}/pay/card`, { cardToken, deviceSessionId });
   },
 
+  async payMercadoPago(orderId: string): Promise<{ redirectUrl: string }> {
+    return apiClient.post<{ redirectUrl: string }>(`/orders/${orderId}/pay/mercadopago`, {});
+  },
+
   async uploadTransferProof(orderId: string, file: File, reference?: string): Promise<Order> {
     const formData = new FormData();
     formData.append('file', file);

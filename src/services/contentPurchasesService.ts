@@ -10,6 +10,10 @@ export const contentPurchasesService = {
     return apiClient.post<ContentPurchase>(`/content-purchases/${purchaseId}/pay/card`, { cardToken, deviceSessionId });
   },
 
+  async payMercadoPago(purchaseId: string): Promise<{ redirectUrl: string }> {
+    return apiClient.post<{ redirectUrl: string }>(`/content-purchases/${purchaseId}/pay/mercadopago`, {});
+  },
+
   async uploadTransferProof(purchaseId: string, file: File, reference?: string): Promise<ContentPurchase> {
     const formData = new FormData();
     formData.append('file', file);

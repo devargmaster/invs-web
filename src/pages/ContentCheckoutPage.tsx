@@ -39,6 +39,12 @@ export function ContentCheckoutPage() {
         eventId: state.type === 'event' ? state.id : undefined,
         paymentMethod,
       });
+      if (paymentMethod === 'MERCADOPAGO') {
+        const { redirectUrl } = await contentPurchasesService.payMercadoPago(purchase.id);
+        window.location.href = redirectUrl; // redirect real: nos vamos del sitio a Mercado Pago
+        return;
+      }
+
       navigate(
         paymentMethod === 'CARD_OPENPAY'
           ? `/streaming/pago/${purchase.id}`
@@ -94,6 +100,22 @@ export function ContentCheckoutPage() {
           <div>
             <div className="checkout-payment-option__label">Transferencia bancaria</div>
             <div className="checkout-payment-option__sub">El acceso queda pendiente hasta validar el pago</div>
+          </div>
+        </div>
+
+        <div
+          className={`checkout-payment-option ${paymentMethod === 'MERCADOPAGO' ? 'checkout-payment-option--active' : ''}`}
+          onClick={() => setPaymentMethod('MERCADOPAGO')}
+        >
+          <div className="checkout-payment-option__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="20" height="20">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M8 12h8M12 8v8" />
+            </svg>
+          </div>
+          <div>
+            <div className="checkout-payment-option__label">Mercado Pago</div>
+            <div className="checkout-payment-option__sub">Te redirigimos a Mercado Pago para pagar</div>
           </div>
         </div>
       </div>
