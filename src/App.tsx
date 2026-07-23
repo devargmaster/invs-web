@@ -21,12 +21,14 @@ import { ContentCheckoutPage } from './pages/ContentCheckoutPage';
 import { ContentPaymentCardPage } from './pages/ContentPaymentCardPage';
 import { ContentTransferPage } from './pages/ContentTransferPage';
 import { ContentPurchaseConfirmationPage } from './pages/ContentPurchaseConfirmationPage';
+import { ThemeBootstrap } from './theme/ThemeBootstrap';
 
 export default function App() {
   return (
     <AuthProvider>
       <CheckoutProvider>
         <BrowserRouter>
+          <ThemeBootstrap />
           <Routes>
             {/* Public */}
             <Route path="/login" element={<LoginPage />} />
