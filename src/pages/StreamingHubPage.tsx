@@ -8,9 +8,11 @@ import { StreamPlayer } from '../components/StreamPlayer';
 import { formatMoney } from '../utils/formatters';
 import type { RecordingWithAccess } from '../types/content';
 import type { RecordingTokenResponse } from '../types/streaming';
+import { useModuleTheme } from '../theme/useModuleTheme';
 import './StreamingHubPage.css';
 
 export function StreamingHubPage() {
+  useModuleTheme('STREAMING');
   const navigate = useNavigate();
   const [recordings, setRecordings] = useState<RecordingWithAccess[]>([]);
   const [loading, setLoading] = useState(true);

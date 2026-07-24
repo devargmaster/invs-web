@@ -1,8 +1,8 @@
 import { apiClient } from './apiClient';
-import type { ThemePalette } from '../types/theme';
+import type { ThemePublicPayload } from '../types/theme';
 
 export const themeService = {
-  async get(): Promise<ThemePalette> {
-    return apiClient.get<ThemePalette>('/theme');
+  async get(): Promise<ThemePublicPayload> {
+    return apiClient.get<ThemePublicPayload>('/theme');
   },
 };

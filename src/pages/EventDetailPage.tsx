@@ -11,6 +11,7 @@ import { formatDate, modeLabel, formatMoney } from '../utils/formatters';
 import type { Event } from '../types/events';
 import type { StreamingTokenResponse, RecordingTokenResponse } from '../types/streaming';
 import type { RecordingWithAccess, AvailableAccess } from '../types/content';
+import { useModuleTheme } from '../theme/useModuleTheme';
 import './EventDetailPage.css';
 
 /** Arma un mensaje + ruta de compra a partir del `availableAccess` que
@@ -26,6 +27,7 @@ function describeAccessDenial(availableAccess: AvailableAccess | undefined): { m
 }
 
 export function EventDetailPage() {
+  useModuleTheme('EVENTS');
   const { id: eventId } = useParams<{ id: string }>();
   const navigate = useNavigate();
 

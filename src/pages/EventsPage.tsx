@@ -4,10 +4,12 @@ import { ApiError } from '../services/apiClient';
 import { EventCard } from '../components/EventCard';
 import { ErrorBanner } from '../components/ErrorBanner';
 import { LoadingSpinner } from '../components/LoadingSpinner';
+import { useModuleTheme } from '../theme/useModuleTheme';
 import type { Event } from '../types/events';
 import './EventsPage.css';
 
 export function EventsPage() {
+  useModuleTheme('EVENTS');
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

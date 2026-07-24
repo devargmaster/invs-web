@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { themeService } from '../services/themeService';
 import { applyTheme, THEME_CACHE_KEY } from './applyTheme';
+import { setThemePayload } from './themeStore';
 
 // Montado por encima de <Routes>, así alcanza también /login y
 // /transfers/:token (fuera de <Layout>). No renderiza nada. La llamada a
@@ -11,9 +12,10 @@ export function ThemeBootstrap() {
   useEffect(() => {
     themeService
       .get()
-      .then((palette) => {
-        applyTheme(palette);
-        localStorage.setItem(THEME_CACHE_KEY, JSON.stringify(palette));
+      .then((payload) => {
+        applyTheme(payload);
+        setThemePayload(payload);
+        localStorage.setItem(THEME_CACHE_KEY, JSON.stringify(payload));
       })
       .catch(() => {
         // Sin conexión o error puntual: se queda con el default/cache ya aplicado.
