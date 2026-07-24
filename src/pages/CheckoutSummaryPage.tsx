@@ -17,10 +17,14 @@ export function CheckoutSummaryPage() {
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('CARD_OPENPAY');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // clear() vacía el carrito antes de navegar a la página siguiente — sin
+  // esta bandera, el re-render con items=[] hace que el guard de más abajo
+  // gane la carrera contra el navigate(...) real y devuelve al paso 1.
+  const [orderConfirmed, setOrderConfirmed] = useState(false);
 
   if (!eventId) return null;
 
-  if (items.length === 0) {
+  if (items.length === 0 && !orderConfirmed) {
     navigate(`/eventos/${eventId}/checkout`, { replace: true });
     return null;
   }
@@ -39,6 +43,7 @@ export function CheckoutSummaryPage() {
         })),
         paymentMethod,
       });
+      setOrderConfirmed(true);
       clear();
 
       if (paymentMethod === 'MERCADOPAGO') {
