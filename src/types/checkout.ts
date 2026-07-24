@@ -31,6 +31,7 @@ export interface AddOn {
   eventId: string;
   name: string;
   description: string | null;
+  imageUrl: string | null;
   priceCents: number;
   currency: string;
   hasVariants: boolean;

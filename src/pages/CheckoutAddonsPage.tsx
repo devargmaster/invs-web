@@ -77,6 +77,9 @@ export function CheckoutAddonsPage() {
               const qty = quantityOf(addon, variant);
               return (
                 <div className="checkout-item" key={addon.id}>
+                  {addon.imageUrl && (
+                    <img className="checkout-item__image" src={addon.imageUrl} alt={addon.name} />
+                  )}
                   <div className="checkout-item__info">
                     <div className="checkout-item__name">{addon.name}</div>
                     {addon.description && <div className="checkout-item__desc">{addon.description}</div>}
