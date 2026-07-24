@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { ordersService } from '../services/ordersService';
 import { ApiError } from '../services/apiClient';
 import { LoadingSpinner } from '../components/LoadingSpinner';
@@ -10,6 +10,7 @@ import './Checkout.css';
 export function OrderConfirmationPage() {
   const { orderId } = useParams<{ orderId: string }>();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
@@ -18,7 +19,16 @@ export function OrderConfirmationPage() {
 
   useEffect(() => {
     if (!orderId) return;
-    ordersService.getById(orderId)
+    // Mercado Pago redirige acá (auto_return) apenas aprueba el pago, antes
+    // de que su webhook llegue a confirmar la orden — si vino con
+    // payment_id, consultamos a MP directo en vez de confiar en que el
+    // webhook ya corrió (podría demorar, o no llegar si el webhook está
+    // mal configurado).
+    const paymentId = searchParams.get('payment_id');
+    const request = paymentId
+      ? ordersService.syncMercadoPago(orderId, paymentId)
+      : ordersService.getById(orderId);
+    request
       .then(setOrder)
       .catch((e) => setError(e instanceof ApiError ? e.message : 'Error cargando la orden.'))
       .finally(() => setLoading(false));

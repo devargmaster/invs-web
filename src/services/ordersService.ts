@@ -22,6 +22,14 @@ export const ordersService = {
     return apiClient.post<{ redirectUrl: string }>(`/orders/${orderId}/pay/mercadopago`, {});
   },
 
+  // MP redirige de vuelta (auto_return) apenas aprueba el pago, antes de
+  // que el webhook llegue a confirmar la orden — esto consulta a MP
+  // directo con el payment_id que ya viene en la URL, sin depender de
+  // que el webhook haya corrido.
+  async syncMercadoPago(orderId: string, paymentId: string): Promise<Order> {
+    return apiClient.post<Order>(`/orders/${orderId}/sync-mercadopago`, { paymentId });
+  },
+
   async uploadTransferProof(orderId: string, file: File, reference?: string): Promise<Order> {
     const formData = new FormData();
     formData.append('file', file);

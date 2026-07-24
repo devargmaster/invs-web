@@ -14,6 +14,11 @@ export const contentPurchasesService = {
     return apiClient.post<{ redirectUrl: string }>(`/content-purchases/${purchaseId}/pay/mercadopago`, {});
   },
 
+  // Ver el comentario de syncMercadoPago en ordersService.ts — mismo motivo.
+  async syncMercadoPago(purchaseId: string, paymentId: string): Promise<ContentPurchase> {
+    return apiClient.post<ContentPurchase>(`/content-purchases/${purchaseId}/sync-mercadopago`, { paymentId });
+  },
+
   async uploadTransferProof(purchaseId: string, file: File, reference?: string): Promise<ContentPurchase> {
     const formData = new FormData();
     formData.append('file', file);
