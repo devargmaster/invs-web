@@ -4,6 +4,7 @@ import { categoriesService } from '../services/categoriesService';
 import { addonsService } from '../services/addonsService';
 import { ApiError } from '../services/apiClient';
 import { useCheckout } from '../context/CheckoutContext';
+import { useAuth } from '../context/AuthContext';
 import { LoadingSpinner } from '../components/LoadingSpinner';
 import { ErrorBanner } from '../components/ErrorBanner';
 import { CartSummaryCard } from '../components/CartSummaryCard';
@@ -15,6 +16,7 @@ export function CheckoutCategoriesPage() {
   const { id: eventId } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { items, setCategoryQuantity, startCheckout, subtotalCents } = useCheckout();
+  const { user } = useAuth();
 
   const [categories, setCategories] = useState<TicketCategory[]>([]);
   const [hasAddons, setHasAddons] = useState(false);
@@ -48,6 +50,16 @@ export function CheckoutCategoriesPage() {
     if (!eventId) return;
     navigate(hasAddons ? `/eventos/${eventId}/checkout/adicionales` : `/eventos/${eventId}/checkout/resumen`);
   };
+
+  if (user && user.role !== 'USER') {
+    return (
+      <div className="checkout-page">
+        <div className="checkout-empty">
+          Esta es una cuenta de staff/admin — no puede comprar entradas. Iniciá sesión con tu cuenta personal.
+        </div>
+      </div>
+    );
+  }
 
   if (loading) return <LoadingSpinner text="Cargando categorías..." />;
 

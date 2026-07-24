@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { contentPurchasesService } from '../services/contentPurchasesService';
+import { useAuth } from '../context/AuthContext';
 import { ApiError } from '../services/apiClient';
 import { ErrorBanner } from '../components/ErrorBanner';
 import { formatMoney } from '../utils/formatters';
@@ -19,6 +20,7 @@ export function ContentCheckoutPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const state = location.state as ContentCheckoutState | null;
+  const { user } = useAuth();
 
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('CARD_OPENPAY');
   const [submitting, setSubmitting] = useState(false);
@@ -29,6 +31,16 @@ export function ContentCheckoutPage() {
   }, [state, navigate]);
 
   if (!state) return null;
+
+  if (user && user.role !== 'USER') {
+    return (
+      <div className="checkout-page checkout-page--narrow">
+        <div className="checkout-empty">
+          Esta es una cuenta de staff/admin — no puede comprar contenido. Iniciá sesión con tu cuenta personal.
+        </div>
+      </div>
+    );
+  }
 
   const handleConfirm = async () => {
     setSubmitting(true);
