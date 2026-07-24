@@ -6,6 +6,12 @@
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   animation: fadeSlideUp 0.4s ease both;
   border: 1px solid var(--color-border);
+  /* El grid ya estira el card a la altura de la fila — sin flex acá, el
+     contenido interno no reparte ese espacio y el badge queda a distinta
+     altura según si hay línea de ubicación o no. */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .event-card:hover {
@@ -64,6 +70,9 @@
 
 .event-card__content {
   padding: 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .event-card__title {
@@ -82,7 +91,8 @@
 
 .event-card__badge {
   display: inline-block;
-  margin-top: 8px;
+  align-self: flex-start;
+  margin-top: auto;
   padding: 4px 12px;
   font-size: 0.7rem;
   font-weight: 700;
