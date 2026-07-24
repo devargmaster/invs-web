@@ -10,6 +10,7 @@ interface AuthContextValue {
   isLoading: boolean;
   error: string | null;
   login: (email: string, password: string) => Promise<void>;
+  register: (fullName: string, email: string, password: string) => Promise<void>;
   loginWithGoogle: (idToken: string) => Promise<void>;
   logout: () => Promise<void>;
   refreshSession: () => Promise<void>;
@@ -46,6 +47,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setUser(res.user);
     } catch (e) {
       const msg = e instanceof ApiError ? e.message : 'Error al iniciar sesión.';
+      setError(msg);
+      throw e;
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  const register = useCallback(async (fullName: string, email: string, password: string) => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const res = await authService.register(fullName, email, password);
+      setUser(res.user);
+    } catch (e) {
+      const msg = e instanceof ApiError ? e.message : 'Error al crear la cuenta.';
       setError(msg);
       throw e;
     } finally {
@@ -96,6 +112,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         isLoading,
         error,
         login,
+        register,
         loginWithGoogle,
         logout,
         refreshSession,

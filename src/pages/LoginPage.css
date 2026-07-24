@@ -144,6 +144,11 @@
   margin: 8px 0 0;
 }
 
+.login-page__footer-note a {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
 .login-page__divider {
   display: flex;
   align-items: center;

@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { ErrorBanner } from '../components/ErrorBanner';
 import { GoogleLoginButton } from '../components/GoogleLoginButton';
@@ -91,6 +91,9 @@ export function LoginPage() {
 
         <GoogleLoginButton onCredential={handleGoogleCredential} />
 
+        <p className="login-page__footer-note">
+          ¿No tenés cuenta? <Link to="/registro">Registrate</Link>
+        </p>
         <p className="login-page__footer-note">
           Plataforma INVS — Acceso web
         </p>
