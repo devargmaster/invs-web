@@ -464,6 +464,12 @@
   color: #FBBF24;
 }
 
+.checkout-confirm__icon--cancelled {
+  background: radial-gradient(circle, #3A1E1E 0%, #231313 100%);
+  box-shadow: 0 0 40px rgba(239, 68, 68, 0.2);
+  color: var(--color-danger);
+}
+
 .checkout-confirm__title {
   font-size: 1.3rem;
   font-weight: 800;
