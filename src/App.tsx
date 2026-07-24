@@ -5,6 +5,8 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 import { Layout } from './components/Layout';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
+import { ForgotPasswordPage } from './pages/ForgotPasswordPage';
+import { ResetPasswordPage } from './pages/ResetPasswordPage';
 import { EventsPage } from './pages/EventsPage';
 import { EventDetailPage } from './pages/EventDetailPage';
 import { TicketsPage } from './pages/TicketsPage';
@@ -34,6 +36,8 @@ export default function App() {
             {/* Public */}
             <Route path="/login" element={<LoginPage />} />
             <Route path="/registro" element={<RegisterPage />} />
+            <Route path="/olvide-password" element={<ForgotPasswordPage />} />
+            <Route path="/resetear-password" element={<ResetPasswordPage />} />
             <Route path="/transfers/:token" element={<AcceptTransferPage />} />
 
             {/* Protected — inside Layout with bottom tabs */}

@@ -37,4 +37,12 @@ export const authService = {
   async getMe(): Promise<AuthUser & { subscription?: { status: string; planName: string } | null }> {
     return apiClient.get('/users/me');
   },
+
+  async forgotPassword(email: string): Promise<{ message: string }> {
+    return apiClient.post('/auth/forgot-password', { email });
+  },
+
+  async resetPassword(token: string, newPassword: string): Promise<{ message: string }> {
+    return apiClient.post('/auth/reset-password', { token, newPassword });
+  },
 };

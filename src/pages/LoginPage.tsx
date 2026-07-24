@@ -69,6 +69,7 @@ export function LoginPage() {
             disabled={isLoading}
             placeholder="••••••••"
           />
+          <Link to="/olvide-password" className="login-page__forgot-link">¿Olvidaste tu contraseña?</Link>
         </div>
 
         <button

@@ -61,6 +61,13 @@
   gap: 6px;
 }
 
+.login-page__forgot-link {
+  align-self: flex-end;
+  margin-top: 4px;
+  font-size: 0.8rem;
+  color: var(--color-accent);
+}
+
 .login-page__label {
   font-size: 0.8rem;
   font-weight: 600;
