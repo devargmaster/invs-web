@@ -140,7 +140,7 @@ export function ContentCheckoutPage() {
         disabled={submitting}
         style={{ marginTop: 20 }}
       >
-        {submitting ? <span className="checkout-btn-spinner" /> : 'Confirmar compra'}
+        {submitting ? <span className="btn-spinner" /> : 'Confirmar compra'}
       </button>
     </div>
   );

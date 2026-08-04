@@ -62,7 +62,7 @@ export function ForgotPasswordPage() {
             </div>
 
             <button type="submit" className="login-page__submit" disabled={loading}>
-              {loading ? <span className="login-page__spinner"></span> : 'Enviar link de recuperación'}
+              {loading ? <span className="btn-spinner btn-spinner--lg"></span> : 'Enviar link de recuperación'}
             </button>
           </>
         )}

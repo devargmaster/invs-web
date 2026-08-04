@@ -108,7 +108,7 @@ export function ContentPurchaseConfirmationPage() {
             onClick={handleRetryMercadoPago}
             disabled={retrying}
           >
-            {retrying ? <span className="checkout-btn-spinner" /> : 'Reintentar pago'}
+            {retrying ? <span className="btn-spinner" /> : 'Reintentar pago'}
           </button>
         )}
 

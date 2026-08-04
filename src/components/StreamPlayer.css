@@ -24,7 +24,7 @@
 }
 
 .stream-player__badge--live {
-  background: #EF4444;
+  background: var(--color-danger);
 }
 
 .stream-player__badge--replay {

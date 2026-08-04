@@ -105,7 +105,7 @@
 .login-page__submit {
   width: 100%;
   padding: 15px;
-  background: linear-gradient(135deg, var(--color-accent) 0%, #7C3AED 100%);
+  background: var(--gradient-primary);
   border: none;
   border-radius: 14px;
   color: white;
@@ -133,15 +133,6 @@
 .login-page__submit:disabled {
   opacity: 0.7;
   cursor: not-allowed;
-}
-
-.login-page__spinner {
-  width: 22px;
-  height: 22px;
-  border: 3px solid rgba(255, 255, 255, 0.3);
-  border-top-color: white;
-  border-radius: 50%;
-  animation: spinner-rotate 0.7s linear infinite;
 }
 
 .login-page__footer-note {

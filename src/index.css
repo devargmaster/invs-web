@@ -23,6 +23,8 @@
   --radius-md: 12px;
   --radius-lg: 16px;
   --radius-xl: 20px;
+
+  --gradient-primary: linear-gradient(135deg, var(--color-accent) 0%, #7C3AED 100%);
 }
 
 /* ─── Reset & Base ──────────────────────────────────────────────────────────── */
@@ -127,6 +129,22 @@ a {
 
 @keyframes spinner-rotate {
   to { transform: rotate(360deg); }
+}
+
+/* ─── Utility: spinner de carga dentro de botones ───────────────────────────── */
+.btn-spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spinner-rotate 0.7s linear infinite;
+}
+
+.btn-spinner--lg {
+  width: 22px;
+  height: 22px;
 }
 
 /* ─── Utility: safe area ────────────────────────────────────────────────────── */

@@ -92,7 +92,7 @@ export function ContentPaymentCardPage() {
         disabled={submitting || !cardNumber || !holderName || !expMonth || !expYear || !cvv}
         style={{ marginTop: 12 }}
       >
-        {submitting ? <span className="checkout-btn-spinner" /> : 'Pagar ahora'}
+        {submitting ? <span className="btn-spinner" /> : 'Pagar ahora'}
       </button>
     </div>
   );

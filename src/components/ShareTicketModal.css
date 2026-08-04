@@ -69,8 +69,8 @@
 }
 
 .share-modal__input-wrap--ok {
-  border-color: #34D399;
-  color: #34D399;
+  border-color: var(--color-success);
+  color: var(--color-success);
 }
 
 .share-modal__input-wrap--error {
@@ -101,7 +101,7 @@
 }
 
 .share-modal__match--ok {
-  color: #34D399;
+  color: var(--color-success);
 }
 
 .share-modal__match--error {
@@ -120,7 +120,7 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: linear-gradient(135deg, var(--color-accent) 0%, #7C3AED 100%);
+  background: var(--gradient-primary);
   border: none;
   border-radius: 12px;
   padding: 15px;
@@ -153,11 +153,3 @@
   cursor: pointer;
 }
 
-.share-modal__spinner {
-  width: 20px;
-  height: 20px;
-  border: 3px solid rgba(255, 255, 255, 0.3);
-  border-top-color: white;
-  border-radius: 50%;
-  animation: spinner-rotate 0.7s linear infinite;
-}

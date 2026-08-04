@@ -102,7 +102,7 @@
   align-items: center;
   justify-content: center;
   margin-top: 22px;
-  background: linear-gradient(135deg, var(--color-accent) 0%, #7C3AED 100%);
+  background: var(--gradient-primary);
   border: none;
   border-radius: 12px;
   padding: 15px;
@@ -119,11 +119,3 @@
   cursor: not-allowed;
 }
 
-.accept-transfer-page__spinner {
-  width: 20px;
-  height: 20px;
-  border: 3px solid rgba(255, 255, 255, 0.3);
-  border-top-color: white;
-  border-radius: 50%;
-  animation: spinner-rotate 0.7s linear infinite;
-}

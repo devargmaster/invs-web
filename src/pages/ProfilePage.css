@@ -81,7 +81,7 @@
   background: transparent;
   border: 1px solid rgba(239, 68, 68, 0.3);
   border-radius: 14px;
-  color: #EF4444;
+  color: var(--color-danger);
   font-size: 0.95rem;
   font-weight: 600;
   font-family: inherit;
@@ -91,7 +91,7 @@
 
 .profile-page__logout:hover {
   background: rgba(239, 68, 68, 0.08);
-  border-color: #EF4444;
+  border-color: var(--color-danger);
 }
 
 /* ─── Confirm dialog ────────────────────────────────────────────────────────── */
@@ -135,7 +135,7 @@
 .profile-page__confirm-yes {
   flex: 1;
   padding: 12px;
-  background: #EF4444;
+  background: var(--color-danger);
   border: none;
   border-radius: 12px;
   color: white;

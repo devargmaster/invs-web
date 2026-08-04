@@ -116,7 +116,7 @@ export function ContentTransferPage() {
         onClick={handleSubmit}
         disabled={submitting || !file}
       >
-        {submitting ? <span className="checkout-btn-spinner" /> : 'Enviar comprobante'}
+        {submitting ? <span className="btn-spinner" /> : 'Enviar comprobante'}
       </button>
     </div>
   );

@@ -152,7 +152,7 @@ export function CheckoutSummaryPage() {
           {/* Confirmar — en desktop el botón vive en el panel lateral, acá solo para mobile */}
           <div className="checkout-page__mobile-confirm">
             <button className="checkout-btn checkout-btn--primary checkout-btn--block" onClick={handleConfirm} disabled={submitting}>
-              {submitting ? <span className="checkout-btn-spinner" /> : 'Confirmar compra'}
+              {submitting ? <span className="btn-spinner" /> : 'Confirmar compra'}
             </button>
           </div>
         </div>
@@ -160,7 +160,7 @@ export function CheckoutSummaryPage() {
         <aside className="checkout-page__sidebar">
           <CartSummaryCard
             title="Resumen"
-            continueLabel={submitting ? <span className="checkout-btn-spinner" /> : 'Confirmar compra'}
+            continueLabel={submitting ? <span className="btn-spinner" /> : 'Confirmar compra'}
             onContinue={handleConfirm}
             continueDisabled={submitting}
           />

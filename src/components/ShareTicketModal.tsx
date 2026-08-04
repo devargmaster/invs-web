@@ -106,7 +106,7 @@ export function ShareTicketModal({ ticketId, ticketLabel, onClose, onSent }: Sha
           onClick={handleSubmit}
         >
           {submitting ? (
-            <span className="share-modal__spinner" />
+            <span className="btn-spinner" />
           ) : (
             <>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">

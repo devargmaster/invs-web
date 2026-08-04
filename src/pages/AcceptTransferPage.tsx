@@ -87,7 +87,7 @@ export function AcceptTransferPage() {
         {isAuthenticated ? (
           emailMatches ? (
             <button className="accept-transfer-page__submit" onClick={handleAcceptLoggedIn} disabled={submitting}>
-              {submitting ? <span className="accept-transfer-page__spinner" /> : 'Aceptar entrada'}
+              {submitting ? <span className="btn-spinner" /> : 'Aceptar entrada'}
             </button>
           ) : (
             <div className="accept-transfer-page__notice">
@@ -124,7 +124,7 @@ export function AcceptTransferPage() {
               required
             />
             <button type="submit" className="accept-transfer-page__submit" disabled={submitting}>
-              {submitting ? <span className="accept-transfer-page__spinner" /> : 'Crear cuenta y aceptar'}
+              {submitting ? <span className="btn-spinner" /> : 'Crear cuenta y aceptar'}
             </button>
           </form>
         )}

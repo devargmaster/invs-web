@@ -78,7 +78,7 @@ export function LoginPage() {
           disabled={isLoading}
         >
           {isLoading ? (
-            <span className="login-page__spinner"></span>
+            <span className="btn-spinner btn-spinner--lg"></span>
           ) : (
             'Ingresar'
           )}

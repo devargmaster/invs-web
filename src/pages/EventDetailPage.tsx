@@ -195,7 +195,7 @@ export function EventDetailPage() {
                   disabled={streamLoading}
                 >
                   {streamLoading ? (
-                    <span className="detail-page__btn-spinner"></span>
+                    <span className="btn-spinner btn-spinner--lg"></span>
                   ) : (
                     <>
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="20" height="20">
@@ -216,7 +216,7 @@ export function EventDetailPage() {
                       disabled={streamLoading}
                     >
                       {streamLoading ? (
-                        <span className="detail-page__btn-spinner"></span>
+                        <span className="btn-spinner btn-spinner--lg"></span>
                       ) : (
                         <>
                           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="20" height="20">

@@ -73,7 +73,7 @@
 }
 
 .scanner-page__result-title--fail {
-  color: #EF4444;
+  color: var(--color-danger);
 }
 
 .scanner-page__result-detail {
@@ -85,7 +85,7 @@
 .scanner-page__btn {
   margin-top: 12px;
   padding: 12px 28px;
-  background: linear-gradient(135deg, var(--color-accent) 0%, #7C3AED 100%);
+  background: var(--gradient-primary);
   border: none;
   border-radius: 12px;
   color: white;

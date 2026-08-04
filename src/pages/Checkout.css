@@ -244,7 +244,7 @@
 }
 
 .checkout-btn--primary {
-  background: linear-gradient(135deg, var(--color-accent) 0%, #7C3AED 100%);
+  background: var(--gradient-primary);
   color: white;
 }
 
@@ -260,15 +260,6 @@
 
 .checkout-btn--block {
   width: 100%;
-}
-
-.checkout-btn-spinner {
-  width: 20px;
-  height: 20px;
-  border: 3px solid rgba(255, 255, 255, 0.3);
-  border-top-color: white;
-  border-radius: 50%;
-  animation: spinner-rotate 0.7s linear infinite;
 }
 
 /* ─── Método de pago ──────────────────────────────────────────────── */
@@ -455,7 +446,7 @@
 .checkout-confirm__icon--success {
   background: radial-gradient(circle, #1E3A2E 0%, #132318 100%);
   box-shadow: 0 0 40px rgba(52, 211, 153, 0.25);
-  color: #34D399;
+  color: var(--color-success);
 }
 
 .checkout-confirm__icon--pending {

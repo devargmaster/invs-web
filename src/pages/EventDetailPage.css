@@ -183,7 +183,7 @@
 }
 
 .detail-page__btn--primary {
-  background: linear-gradient(135deg, var(--color-accent) 0%, #7C3AED 100%);
+  background: var(--gradient-primary);
   color: white;
 }
 
@@ -209,15 +209,6 @@
 
 .detail-page__btn--success:hover:not(:disabled) {
   box-shadow: 0 8px 25px rgba(16, 185, 129, 0.35);
-}
-
-.detail-page__btn-spinner {
-  width: 22px;
-  height: 22px;
-  border: 3px solid rgba(255, 255, 255, 0.3);
-  border-top-color: white;
-  border-radius: 50%;
-  animation: spinner-rotate 0.7s linear infinite;
 }
 
 @keyframes pulse-dot {
