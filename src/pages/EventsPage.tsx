@@ -30,13 +30,13 @@ export function EventsPage() {
   useEffect(() => { load(); }, [load]);
 
   if (loading) {
-    return <LoadingSpinner text="Cargando eventos..." />;
+    return <LoadingSpinner text="Cargando experiencias..." />;
   }
 
   return (
     <div className="events-page">
       <div className="events-page__header">
-        <h1 className="events-page__title">Eventos INVS</h1>
+        <h1 className="events-page__title">Experiencias INVS</h1>
         <button className="events-page__refresh" onClick={load} title="Refrescar">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="20" height="20">
             <polyline points="23 4 23 10 17 10" />
