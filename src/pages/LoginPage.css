@@ -15,7 +15,7 @@
   transform: translateX(-50%);
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, rgba(167, 139, 250, 0.18) 0%, transparent 70%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--color-accent) 18%, transparent) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
   animation: login-glow 6s ease-in-out infinite;
@@ -42,11 +42,11 @@
   font-size: 3.5rem;
   font-weight: 900;
   letter-spacing: 8px;
-  background: linear-gradient(135deg, var(--color-accent) 0%, #C4B5FD 50%, #818CF8 100%);
+  background: linear-gradient(135deg, var(--color-accent-hover) 0%, var(--color-accent) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  filter: drop-shadow(0 4px 24px rgba(167, 139, 250, 0.3));
+  filter: drop-shadow(0 4px 24px color-mix(in srgb, var(--color-accent) 30%, transparent));
 }
 
 .login-page__tagline {
@@ -93,9 +93,21 @@
   color: rgba(143, 143, 163, 0.5);
 }
 
+/* Chrome pisa el background del input con su propio celeste al autocompletar
+   un dato guardado — sin esto, el campo se ve claro aunque el CSS pida
+   fondo oscuro. El delay enorme en la transition es el truco estándar para
+   que ese repintado nunca llegue a mostrarse. */
+.login-page__input:-webkit-autofill,
+.login-page__input:-webkit-autofill:hover,
+.login-page__input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--color-text);
+  -webkit-box-shadow: 0 0 0 1000px var(--color-surface) inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
 .login-page__input:focus {
   border-color: var(--color-accent);
-  box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.15);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 15%, transparent);
 }
 
 .login-page__input:disabled {
@@ -108,7 +120,7 @@
   background: var(--gradient-primary);
   border: none;
   border-radius: 14px;
-  color: white;
+  color: var(--color-bg);
   font-size: 1rem;
   font-weight: 700;
   font-family: inherit;
@@ -123,7 +135,7 @@
 
 .login-page__submit:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(167, 139, 250, 0.35);
+  box-shadow: 0 8px 25px color-mix(in srgb, var(--color-accent) 35%, transparent);
 }
 
 .login-page__submit:active:not(:disabled) {

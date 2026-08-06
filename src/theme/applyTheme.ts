@@ -15,9 +15,17 @@ const CSS_VAR_BY_KEY: Record<keyof ThemePalette, string> = {
   colorDanger: '--color-danger',
 };
 
-export function applyTheme(palette: ThemePalette) {
+// Nunca escribe un valor inválido: una paleta parcial o corrupta (cache
+// vieja, respuesta inesperada del backend) no debe poder tirar abajo el
+// resto del sitio — las claves ausentes simplemente dejan el default de
+// :root en index.css en vez de pisarlo con "undefined".
+export function applyTheme(palette: Partial<ThemePalette> | null | undefined) {
+  if (!palette) return;
   const root = document.documentElement.style;
   for (const key of Object.keys(CSS_VAR_BY_KEY) as (keyof ThemePalette)[]) {
-    root.setProperty(CSS_VAR_BY_KEY[key], palette[key]);
+    const value = palette[key];
+    if (typeof value === 'string' && value.length > 0) {
+      root.setProperty(CSS_VAR_BY_KEY[key], value);
+    }
   }
 }

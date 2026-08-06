@@ -33,7 +33,7 @@
 .events-page__refresh:hover {
   color: var(--color-accent);
   border-color: var(--color-accent);
-  background: rgba(167, 139, 250, 0.08);
+  background: color-mix(in srgb, var(--color-accent) 8%, transparent);
 }
 
 .events-page__refresh:active svg {

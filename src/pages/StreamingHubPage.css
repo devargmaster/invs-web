@@ -154,7 +154,7 @@
 
 .content-card__cta--primary {
   background: var(--gradient-primary);
-  color: white;
+  color: var(--color-bg);
 }
 
 .content-card__cta--buy {
@@ -164,7 +164,7 @@
 }
 
 .content-card__cta--buy:hover {
-  background: rgba(167, 139, 250, 0.1);
+  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
 }
 
 .content-card__note {

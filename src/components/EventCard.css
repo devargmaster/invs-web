@@ -16,8 +16,8 @@
 
 .event-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(167, 139, 250, 0.12);
-  border-color: rgba(167, 139, 250, 0.3);
+  box-shadow: 0 12px 40px color-mix(in srgb, var(--color-accent) 12%, transparent);
+  border-color: color-mix(in srgb, var(--color-accent) 30%, transparent);
 }
 
 .event-card:active {
@@ -97,7 +97,7 @@
   font-size: 0.7rem;
   font-weight: 700;
   color: var(--color-accent);
-  background: rgba(167, 139, 250, 0.12);
+  background: color-mix(in srgb, var(--color-accent) 12%, transparent);
   border-radius: 20px;
   letter-spacing: 0.3px;
   text-transform: uppercase;

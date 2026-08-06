@@ -19,14 +19,14 @@
   padding: 8px;
   position: relative;
   z-index: 1;
-  box-shadow: 0 8px 32px rgba(167, 139, 250, 0.2);
+  box-shadow: 0 8px 32px color-mix(in srgb, var(--color-accent) 20%, transparent);
 }
 
 .qr-display__glow {
   position: absolute;
   width: 260px;
   height: 260px;
-  background: radial-gradient(circle, rgba(167, 139, 250, 0.25) 0%, transparent 70%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--color-accent) 25%, transparent) 0%, transparent 70%);
   border-radius: 50%;
   animation: qr-glow 3s ease-in-out infinite;
 }

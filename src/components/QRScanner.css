@@ -58,5 +58,5 @@
 
 @keyframes scan-pulse {
   0%, 100% { border-color: var(--color-accent); }
-  50% { border-color: rgba(167, 139, 250, 0.4); }
+  50% { border-color: color-mix(in srgb, var(--color-accent) 40%, transparent); }
 }

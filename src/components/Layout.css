@@ -64,12 +64,12 @@
 
 .topnav-link:hover {
   color: var(--color-text);
-  background: rgba(167, 139, 250, 0.08);
+  background: color-mix(in srgb, var(--color-accent) 8%, transparent);
 }
 
 .topnav-link--active {
   color: var(--color-accent);
-  background: rgba(167, 139, 250, 0.12);
+  background: color-mix(in srgb, var(--color-accent) 12%, transparent);
 }
 
 /* ─── Tab bar de mobile ──────────────────────────────────────────────────────── */

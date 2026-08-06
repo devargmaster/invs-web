@@ -28,7 +28,7 @@
 }
 
 .stream-player__badge--replay {
-  background: #7C3AED;
+  background: var(--color-accent);
 }
 
 .stream-player__title {

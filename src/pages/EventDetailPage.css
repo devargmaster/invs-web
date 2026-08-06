@@ -87,7 +87,7 @@
   font-size: 0.7rem;
   font-weight: 700;
   color: var(--color-accent);
-  background: rgba(167, 139, 250, 0.12);
+  background: color-mix(in srgb, var(--color-accent) 12%, transparent);
   border-radius: 20px;
   letter-spacing: 0.3px;
   text-transform: uppercase;
@@ -184,11 +184,11 @@
 
 .detail-page__btn--primary {
   background: var(--gradient-primary);
-  color: white;
+  color: var(--color-bg);
 }
 
 .detail-page__btn--primary:hover:not(:disabled) {
-  box-shadow: 0 8px 25px rgba(167, 139, 250, 0.35);
+  box-shadow: 0 8px 25px color-mix(in srgb, var(--color-accent) 35%, transparent);
 }
 
 .detail-page__btn--secondary {
@@ -198,8 +198,8 @@
 }
 
 .detail-page__btn--secondary:hover:not(:disabled) {
-  background: rgba(167, 139, 250, 0.08);
-  box-shadow: 0 8px 25px rgba(167, 139, 250, 0.15);
+  background: color-mix(in srgb, var(--color-accent) 8%, transparent);
+  box-shadow: 0 8px 25px color-mix(in srgb, var(--color-accent) 15%, transparent);
 }
 
 .detail-page__btn--success {
