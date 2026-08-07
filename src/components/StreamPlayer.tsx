@@ -40,6 +40,11 @@ export function StreamPlayer({ playbackUrl, providerType = 'mux', type, title }:
             className="stream-player__iframe"
             allow="autoplay; encrypted-media; picture-in-picture"
             allowFullScreen
+            // Sin allow-top-navigation ni allow-popups a propósito: el
+            // player (YouTube/Twitch/Vimeo) puede reproducir normalmente,
+            // pero no puede sacar al espectador de invs-web ni abrir
+            // pestañas nuevas (logo, "Ver en Twitch", anuncios, etc.).
+            sandbox="allow-scripts allow-same-origin allow-presentation"
             title={title || 'Stream'}
           />
         ) : (
