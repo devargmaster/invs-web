@@ -1,4 +1,4 @@
-export type ProviderType = 'mux' | 'youtube' | 'vimeo';
+export type ProviderType = 'mux' | 'youtube' | 'vimeo' | 'twitch';
 
 export interface StreamingTokenResponse {
   playbackId: string;

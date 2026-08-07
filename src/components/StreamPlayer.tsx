@@ -9,7 +9,18 @@ interface StreamPlayerProps {
 }
 
 export function StreamPlayer({ playbackUrl, providerType = 'mux', type, title }: StreamPlayerProps) {
-  const isEmbed = providerType === 'youtube' || providerType === 'vimeo';
+  const isEmbed = providerType === 'youtube' || providerType === 'vimeo' || providerType === 'twitch';
+
+  // Twitch exige un parámetro `parent` con el hostname exacto que sirve la
+  // página — no lo manda el backend porque no sabe desde qué dominio se va
+  // a ver esto (localhost en dev, el dominio de Vercel en prod), así que
+  // se arma acá con el hostname real en tiempo de ejecución.
+  const src =
+    providerType === 'twitch'
+      ? `${playbackUrl}&parent=${window.location.hostname}`
+      : playbackUrl.includes('youtube.com/embed')
+        ? `${playbackUrl}&autoplay=1&rel=0&modestbranding=1&playsinline=1`
+        : playbackUrl;
 
   return (
     <div className="stream-player">
@@ -25,10 +36,7 @@ export function StreamPlayer({ playbackUrl, providerType = 'mux', type, title }:
       <div className="stream-player__video-wrapper">
         {isEmbed ? (
           <iframe
-            src={playbackUrl.includes('youtube.com/embed')
-              ? `${playbackUrl}&autoplay=1&rel=0&modestbranding=1&playsinline=1`
-              : playbackUrl
-            }
+            src={src}
             className="stream-player__iframe"
             allow="autoplay; encrypted-media; picture-in-picture"
             allowFullScreen
@@ -50,6 +58,7 @@ export function StreamPlayer({ playbackUrl, providerType = 'mux', type, title }:
           {providerType === 'mux' ? '⚡ Mux Video'
             : providerType === 'youtube' ? '▶ YouTube'
             : providerType === 'vimeo' ? '🎞 Vimeo'
+            : providerType === 'twitch' ? '🟣 Twitch'
             : providerType}
         </span>
       </div>
