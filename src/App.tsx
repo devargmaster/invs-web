@@ -24,6 +24,7 @@ import { ContentCheckoutPage } from './pages/ContentCheckoutPage';
 import { ContentPaymentCardPage } from './pages/ContentPaymentCardPage';
 import { ContentTransferPage } from './pages/ContentTransferPage';
 import { ContentPurchaseConfirmationPage } from './pages/ContentPurchaseConfirmationPage';
+import { LandingPage } from './pages/LandingPage';
 import { ThemeBootstrap } from './theme/ThemeBootstrap';
 
 export default function App() {
@@ -39,6 +40,7 @@ export default function App() {
             <Route path="/olvide-password" element={<ForgotPasswordPage />} />
             <Route path="/resetear-password" element={<ResetPasswordPage />} />
             <Route path="/transfers/:token" element={<AcceptTransferPage />} />
+            <Route path="/l/:slug" element={<LandingPage />} />
 
             {/* Protected — inside Layout with bottom tabs */}
             <Route
