@@ -1,5 +1,5 @@
-import { StreamPlayer } from '../StreamPlayer';
-import type { LandingBlock } from '../../types/landing';
+import { StreamPlayer } from '../../../../components/StreamPlayer';
+import type { LandingBlock } from '../../../../types/landing';
 
 export function VideoBlock({ block }: { block: LandingBlock }) {
   const { playbackUrl, providerType, title } = block.content;

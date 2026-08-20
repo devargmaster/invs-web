@@ -1,4 +1,4 @@
-import type { LandingBlock } from '../../types/landing';
+import type { LandingBlock } from '../../../../types/landing';
 
 export function TextBlock({ block }: { block: LandingBlock }) {
   const { heading, body } = block.content;

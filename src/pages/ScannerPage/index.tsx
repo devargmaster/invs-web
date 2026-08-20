@@ -1,10 +1,10 @@
 import { useState, useCallback } from 'react';
-import { useAuth } from '../context/AuthContext';
-import { ticketsService } from '../services/ticketsService';
-import { ApiError } from '../services/apiClient';
-import { QRScanner } from '../components/QRScanner';
-import { LoadingSpinner } from '../components/LoadingSpinner';
-import type { RedeemableAddon } from '../types/tickets';
+import { useAuth } from '../../context/AuthContext';
+import { ticketsService } from '../../services/ticketsService';
+import { ApiError } from '../../services/apiClient';
+import { QRScanner } from './components/QRScanner';
+import { LoadingSpinner } from '../../components/LoadingSpinner';
+import type { RedeemableAddon } from '../../types/tickets';
 import './ScannerPage.css';
 
 export function ScannerPage() {

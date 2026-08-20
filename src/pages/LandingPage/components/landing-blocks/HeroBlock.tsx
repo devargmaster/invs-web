@@ -1,4 +1,4 @@
-import type { LandingBlock } from '../../types/landing';
+import type { LandingBlock } from '../../../../types/landing';
 
 export function HeroBlock({ block }: { block: LandingBlock }) {
   const { eyebrow, title, subtitle, ctaLabel, ctaHref } = block.content;

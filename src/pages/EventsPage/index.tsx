@@ -1,11 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
-import { eventsService } from '../services/eventsService';
-import { ApiError } from '../services/apiClient';
-import { EventCard } from '../components/EventCard';
-import { ErrorBanner } from '../components/ErrorBanner';
-import { LoadingSpinner } from '../components/LoadingSpinner';
-import { useModuleTheme } from '../theme/useModuleTheme';
-import type { Event } from '../types/events';
+import { eventsService } from '../../services/eventsService';
+import { ApiError } from '../../services/apiClient';
+import { EventCard } from './components/EventCard';
+import { ErrorBanner } from '../../components/ErrorBanner';
+import { LoadingSpinner } from '../../components/LoadingSpinner';
+import { useModuleTheme } from '../../theme/useModuleTheme';
+import type { Event } from '../../types/events';
 import './EventsPage.css';
 
 export function EventsPage() {

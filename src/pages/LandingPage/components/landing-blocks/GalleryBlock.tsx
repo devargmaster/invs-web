@@ -1,4 +1,4 @@
-import type { LandingBlock } from '../../types/landing';
+import type { LandingBlock } from '../../../../types/landing';
 
 export function GalleryBlock({ block }: { block: LandingBlock }) {
   const images: string[] = block.content.images ?? [];

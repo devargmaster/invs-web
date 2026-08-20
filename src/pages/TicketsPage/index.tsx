@@ -1,15 +1,15 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { ticketsService } from '../services/ticketsService';
-import { ordersService } from '../services/ordersService';
-import { ApiError } from '../services/apiClient';
-import { useAuth } from '../context/AuthContext';
-import { ErrorBanner } from '../components/ErrorBanner';
-import { LoadingSpinner } from '../components/LoadingSpinner';
-import { QRDisplay } from '../components/QRDisplay';
-import { ShareTicketModal } from '../components/ShareTicketModal';
-import { formatDate, formatMoney } from '../utils/formatters';
-import type { Ticket } from '../types/tickets';
-import type { Order, OrderStatus } from '../types/checkout';
+import { ticketsService } from '../../services/ticketsService';
+import { ordersService } from '../../services/ordersService';
+import { ApiError } from '../../services/apiClient';
+import { useAuth } from '../../context/AuthContext';
+import { ErrorBanner } from '../../components/ErrorBanner';
+import { LoadingSpinner } from '../../components/LoadingSpinner';
+import { QRDisplay } from './components/QRDisplay';
+import { ShareTicketModal } from './components/ShareTicketModal';
+import { formatDate, formatMoney } from '../../utils/formatters';
+import type { Ticket } from '../../types/tickets';
+import type { Order, OrderStatus } from '../../types/checkout';
 import './TicketsPage.css';
 
 type TicketTab = 'proximos' | 'anteriores' | 'reservas';

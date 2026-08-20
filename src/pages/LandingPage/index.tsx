@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { landingsService } from '../services/landingsService';
-import { ApiError } from '../services/apiClient';
-import { LoadingSpinner } from '../components/LoadingSpinner';
-import { LandingBlockRenderer } from '../components/landing-blocks';
-import type { Landing } from '../types/landing';
+import { landingsService } from '../../services/landingsService';
+import { ApiError } from '../../services/apiClient';
+import { LoadingSpinner } from '../../components/LoadingSpinner';
+import { LandingBlockRenderer } from './components/landing-blocks';
+import type { Landing } from '../../types/landing';
 import './LandingPage.css';
 
 export function LandingPage() {

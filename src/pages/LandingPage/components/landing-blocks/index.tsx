@@ -1,5 +1,5 @@
 import type { ComponentType } from 'react';
-import type { LandingBlock, LandingBlockType } from '../../types/landing';
+import type { LandingBlock, LandingBlockType } from '../../../../types/landing';
 import { HeroBlock } from './HeroBlock';
 import { TextBlock } from './TextBlock';
 import { GalleryBlock } from './GalleryBlock';

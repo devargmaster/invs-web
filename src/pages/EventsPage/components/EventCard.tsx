@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import { formatDate, modeLabel } from '../utils/formatters';
-import type { Event } from '../types/events';
+import { formatDate, modeLabel } from '../../../utils/formatters';
+import type { Event } from '../../../types/events';
 import './EventCard.css';
 
 interface EventCardProps {

@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
-import { ticketsService } from '../services/ticketsService';
-import { ApiError } from '../services/apiClient';
+import { ticketsService } from '../../../services/ticketsService';
+import { ApiError } from '../../../services/apiClient';
 import './ShareTicketModal.css';
 
 interface ShareTicketModalProps {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import type { LandingBlock } from '../../types/landing';
+import type { LandingBlock } from '../../../../types/landing';
 
 function getRemaining(targetDate: string) {
   const diff = Math.max(0, new Date(targetDate).getTime() - Date.now());

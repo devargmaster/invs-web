@@ -1,10 +1,10 @@
 import { useState, useCallback } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import { ErrorBanner } from '../components/ErrorBanner';
-import { GoogleLoginButton } from '../components/GoogleLoginButton';
-import { ENV } from '../config/env';
-import './LoginPage.css';
+import { useAuth } from '../../context/AuthContext';
+import { ErrorBanner } from '../../components/ErrorBanner';
+import { GoogleLoginButton } from './components/GoogleLoginButton';
+import { ENV } from '../../config/env';
+import '../LoginPage.css';
 
 export function LoginPage() {
   const navigate = useNavigate();

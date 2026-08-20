@@ -1,6 +1,6 @@
 import { QRCodeSVG } from 'qrcode.react';
-import { formatDate } from '../utils/formatters';
-import type { TicketStatus } from '../types/tickets';
+import { formatDate } from '../../../utils/formatters';
+import type { TicketStatus } from '../../../types/tickets';
 import './QRDisplay.css';
 
 interface QRDisplayProps {

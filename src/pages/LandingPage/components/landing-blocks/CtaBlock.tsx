@@ -1,4 +1,4 @@
-import type { LandingBlock } from '../../types/landing';
+import type { LandingBlock } from '../../../../types/landing';
 
 export function CtaBlock({ block }: { block: LandingBlock }) {
   const { label, href } = block.content;
