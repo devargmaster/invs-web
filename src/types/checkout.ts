@@ -28,7 +28,6 @@ export interface AddonVariant {
 
 export interface AddOn {
   id: string;
-  eventId: string;
   name: string;
   description: string | null;
   imageUrl: string | null;
@@ -38,6 +37,7 @@ export interface AddOn {
   maxStock: number | null;
   reservedStock: number;
   isActive: boolean;
+  showInStore: boolean;
   sortOrder: number;
   variants: AddonVariant[];
 }

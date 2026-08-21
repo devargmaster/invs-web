@@ -24,6 +24,11 @@ import { ContentCheckoutPage } from './pages/ContentCheckoutPage';
 import { ContentPaymentCardPage } from './pages/ContentPaymentCardPage';
 import { ContentTransferPage } from './pages/ContentTransferPage';
 import { ContentPurchaseConfirmationPage } from './pages/ContentPurchaseConfirmationPage';
+import { TiendaPage } from './pages/TiendaPage';
+import { TiendaCheckoutPage } from './pages/TiendaCheckoutPage';
+import { TiendaPaymentCardPage } from './pages/TiendaPaymentCardPage';
+import { TiendaTransferPage } from './pages/TiendaTransferPage';
+import { TiendaPurchaseConfirmationPage } from './pages/TiendaPurchaseConfirmationPage';
 import { LandingPage } from './pages/LandingPage';
 import { ThemeBootstrap } from './theme/ThemeBootstrap';
 
@@ -64,6 +69,11 @@ export default function App() {
               <Route path="/streaming/pago/:purchaseId" element={<ContentPaymentCardPage />} />
               <Route path="/streaming/transferencia/:purchaseId" element={<ContentTransferPage />} />
               <Route path="/streaming/confirmacion/:purchaseId" element={<ContentPurchaseConfirmationPage />} />
+              <Route path="/tienda" element={<TiendaPage />} />
+              <Route path="/tienda/comprar" element={<TiendaCheckoutPage />} />
+              <Route path="/tienda/pago/:purchaseId" element={<TiendaPaymentCardPage />} />
+              <Route path="/tienda/transferencia/:purchaseId" element={<TiendaTransferPage />} />
+              <Route path="/tienda/confirmacion/:purchaseId" element={<TiendaPurchaseConfirmationPage />} />
               <Route path="/staff/scanner" element={<ScannerPage />} />
               <Route path="/perfil" element={<ProfilePage />} />
             </Route>
