@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { useCheckout } from '../context/CheckoutContext';
-import { formatMoney } from '../utils/formatters';
+import { formatMoney, formatTicketPriceShort } from '../utils/formatters';
 import './CartSummaryCard.css';
 
 interface CartSummaryCardProps {
@@ -39,7 +39,7 @@ export function CartSummaryCard({ title = 'Tu compra', continueLabel, onContinue
         {items.map((i) => (
           <div className="cart-summary-card__line" key={i.category.id}>
             <span className="cart-summary-card__line-label">{i.quantity}× {i.category.name}</span>
-            <span className="cart-summary-card__line-value">{formatMoney(i.category.priceCents * i.quantity, i.category.currency)}</span>
+            <span className="cart-summary-card__line-value">{formatTicketPriceShort(i.category.priceCents * i.quantity, i.category.currency)}</span>
           </div>
         ))}
         {addonItems.map((i) => (

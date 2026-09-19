@@ -5,7 +5,7 @@ import { ordersService } from '../services/ordersService';
 import { ApiError } from '../services/apiClient';
 import { ErrorBanner } from '../components/ErrorBanner';
 import { CartSummaryCard } from '../components/CartSummaryCard';
-import { formatMoney } from '../utils/formatters';
+import { formatMoney, formatTicketPriceShort } from '../utils/formatters';
 import type { PaymentMethod } from '../types/checkout';
 import './Checkout.css';
 
@@ -78,7 +78,7 @@ export function CheckoutSummaryPage() {
             {items.map((i) => (
               <div className="checkout-summary-line" key={i.category.id}>
                 <span className="checkout-summary-line__label">{i.quantity}× {i.category.name}</span>
-                <span className="checkout-summary-line__value">{formatMoney(i.category.priceCents * i.quantity, i.category.currency)}</span>
+                <span className="checkout-summary-line__value">{formatTicketPriceShort(i.category.priceCents * i.quantity, i.category.currency)}</span>
               </div>
             ))}
             {addonItems.map((i) => (

@@ -16,3 +16,16 @@ export function modeLabel(mode: string): string {
 export function formatMoney(cents: number, currency = 'ARS'): string {
   return new Intl.NumberFormat('es-AR', { style: 'currency', currency }).format(cents / 100);
 }
+
+/** Precio de una categoría de entrada: si es $0 no tiene sentido mostrar
+ * "$0,00" como si fuera un valor — es acceso gratuito para quien tiene
+ * cuenta INVS (ej. categorías de prensa/acreditación). */
+export function formatTicketPrice(cents: number, currency = 'ARS'): string {
+  return cents === 0 ? 'Acceso sin cargo para miembros registrados INVS' : formatMoney(cents, currency);
+}
+
+/** Misma idea que formatTicketPrice pero para espacios angostos de una
+ * sola línea (ej. el valor de una fila del resumen del carrito). */
+export function formatTicketPriceShort(cents: number, currency = 'ARS'): string {
+  return cents === 0 ? 'Sin cargo' : formatMoney(cents, currency);
+}

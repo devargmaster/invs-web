@@ -8,7 +8,7 @@ import { useAuth } from '../context/AuthContext';
 import { LoadingSpinner } from '../components/LoadingSpinner';
 import { ErrorBanner } from '../components/ErrorBanner';
 import { CartSummaryCard } from '../components/CartSummaryCard';
-import { formatMoney } from '../utils/formatters';
+import { formatMoney, formatTicketPrice } from '../utils/formatters';
 import type { TicketCategory } from '../types/checkout';
 import './Checkout.css';
 
@@ -103,7 +103,7 @@ export function CheckoutCategoriesPage() {
                       Ingreso: {new Date(cat.accessStartsAt).toLocaleString('es-AR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })}
                     </div>
                   )}
-                  <div className="checkout-item__price">{formatMoney(cat.priceCents, cat.currency)}</div>
+                  <div className="checkout-item__price">{formatTicketPrice(cat.priceCents, cat.currency)}</div>
                   <div className={`checkout-item__available ${available <= 0 ? 'checkout-item__available--none' : available <= 5 ? 'checkout-item__available--low' : ''}`}>
                     {available <= 0 ? 'Sin cupo disponible' : `${available} disponibles`}
                   </div>
