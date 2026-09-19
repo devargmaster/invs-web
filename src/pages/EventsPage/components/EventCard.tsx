@@ -31,13 +31,13 @@ export function EventCard({ event }: EventCardProps) {
             EN VIVO
           </span>
         )}
-        {!event.date && (
+        {!event.commerciallyReleased && (
           <span className="event-card__soon-badge">Próximamente</span>
         )}
       </div>
       <div className="event-card__content">
         <h3 className="event-card__title">{event.title}</h3>
-        <p className="event-card__meta">{formatDate(event.date)}</p>
+        <p className="event-card__meta">{event.commerciallyReleased ? formatDate(event.date) : 'Próximamente'}</p>
         {event.location && (
           <p className="event-card__meta">📍 {event.location}</p>
         )}

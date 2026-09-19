@@ -5,7 +5,8 @@ export interface Event {
   id: string;
   title: string;
   description: string;
-  date: string | null; // null = "Próximamente" (anunciado, fecha a confirmar)
+  date: string | null; // puede tener fecha aunque no esté liberado — ver commerciallyReleased
+  commerciallyReleased: boolean; // false = "Próximamente", sin venta de entradas, sin importar si ya tiene fecha
   location: string | null;
   mode: EventMode;
   status: EventStatus;

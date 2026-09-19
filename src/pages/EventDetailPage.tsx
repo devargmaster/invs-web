@@ -174,7 +174,7 @@ export function EventDetailPage() {
                 EN VIVO AHORA
               </span>
             )}
-            {!event.date && (
+            {!event.commerciallyReleased && (
               <span className="event-card__soon-badge">Próximamente</span>
             )}
           </div>
@@ -182,7 +182,7 @@ export function EventDetailPage() {
           {/* Event info */}
           <div className="detail-page__info">
             <h1 className="detail-page__title">{event.title}</h1>
-            <p className="detail-page__meta">{formatDate(event.date)}</p>
+            <p className="detail-page__meta">{event.commerciallyReleased ? formatDate(event.date) : 'Próximamente'}</p>
             {event.location && <p className="detail-page__meta">📍 {event.location}</p>}
             <span className="detail-page__badge">{modeLabel(event.mode)}</span>
           </div>
@@ -266,7 +266,7 @@ export function EventDetailPage() {
 
         {/* Ticket sidebar — sticky en desktop, sección normal en mobile */}
         <aside className="detail-page__sidebar">
-          {canGetTicket && !event.date && (
+          {canGetTicket && !event.commerciallyReleased && (
             <div className="detail-page__cta-card">
               <span className="detail-page__cta-title">Próximamente</span>
               <p className="detail-page__cta-note">
@@ -275,7 +275,7 @@ export function EventDetailPage() {
             </div>
           )}
 
-          {canGetTicket && event.date && (
+          {canGetTicket && event.commerciallyReleased && (
             <div className="detail-page__cta-card">
               <span className="detail-page__cta-title">Conseguí tu entrada</span>
               <p className="detail-page__cta-note">
