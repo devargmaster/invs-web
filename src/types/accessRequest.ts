@@ -5,6 +5,7 @@ export interface AccessRequest {
   eventId: string;
   userId: string;
   code: string | null;
+  phone: string | null;
   note: string | null;
   status: AccessRequestStatus;
   rejectionReason: string | null;
@@ -14,5 +15,6 @@ export interface AccessRequest {
 export interface CreateAccessRequestPayload {
   eventId: string;
   code?: string;
+  phone: string;
   note?: string;
 }

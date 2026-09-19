@@ -12,15 +12,24 @@ interface AccessRequestModalProps {
 
 export function AccessRequestModal({ eventId, onClose, onSent }: AccessRequestModalProps) {
   const [code, setCode] = useState('');
+  const [phone, setPhone] = useState('');
   const [note, setNote] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const canSubmit = phone.trim().length >= 6;
+
   const handleSubmit = async () => {
+    if (!canSubmit) return;
     setSubmitting(true);
     setError(null);
     try {
-      const request = await accessRequestsService.create({ eventId, code: code.trim() || undefined, note: note.trim() || undefined });
+      const request = await accessRequestsService.create({
+        eventId,
+        code: code.trim() || undefined,
+        phone: phone.trim(),
+        note: note.trim() || undefined,
+      });
       onSent(request);
     } catch (e) {
       setError(e instanceof ApiError ? e.message : 'Error al enviar la solicitud.');
@@ -38,6 +47,16 @@ export function AccessRequestModal({ eventId, onClose, onSent }: AccessRequestMo
         <p className="access-request-modal__desc">
           Contanos tu código o el motivo (ej. acreditación de prensa) y el equipo de INVS lo revisa a la brevedad. Te avisamos por mail apenas quede aprobado.
         </p>
+
+        <label className="access-request-modal__label">Teléfono</label>
+        <input
+          type="tel"
+          className="access-request-modal__input"
+          placeholder="Ej: +54 9 11 1234-5678"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+        />
+        <p className="access-request-modal__hint">El staff lo usa para contactarte y chequear la acreditación antes de aprobar.</p>
 
         <label className="access-request-modal__label">Código (opcional)</label>
         <input
@@ -59,7 +78,7 @@ export function AccessRequestModal({ eventId, onClose, onSent }: AccessRequestMo
 
         {error && <div className="access-request-modal__error">{error}</div>}
 
-        <button className="access-request-modal__submit" disabled={submitting} onClick={handleSubmit}>
+        <button className="access-request-modal__submit" disabled={!canSubmit || submitting} onClick={handleSubmit}>
           {submitting ? <span className="btn-spinner" /> : 'Enviar solicitud'}
         </button>
 
