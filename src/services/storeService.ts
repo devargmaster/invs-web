@@ -1,9 +1,11 @@
 import { apiClient } from './apiClient';
 import type { StoreProduct, StorePurchase, CreateStorePurchasePayload } from '../types/store';
+import type { AddonCategory } from '../types/checkout';
 
 export const storeService = {
-  async getProducts(): Promise<StoreProduct[]> {
-    return apiClient.get<StoreProduct[]>('/store/products');
+  async getProducts(category?: AddonCategory): Promise<StoreProduct[]> {
+    const query = category ? `?category=${category}` : '';
+    return apiClient.get<StoreProduct[]>(`/store/products${query}`);
   },
 
   async create(payload: CreateStorePurchasePayload): Promise<StorePurchase> {

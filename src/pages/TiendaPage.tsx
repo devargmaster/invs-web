@@ -26,6 +26,7 @@ export function TiendaPage() {
   const [quantities, setQuantities] = useState<Record<string, number>>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [categoryTab, setCategoryTab] = useState<'TODOS' | 'PRODUCTO' | 'SERVICIO'>('TODOS');
 
   const load = useCallback(() => {
     setLoading(true);
@@ -66,14 +67,30 @@ export function TiendaPage() {
         <div className="checkout-page__main">
           <div className="checkout-page__header">
             <span className="checkout-page__step">Tienda</span>
-            <h1 className="checkout-page__title">Productos</h1>
-            <p className="checkout-page__subtitle">Comprá productos sueltos, sin necesidad de una entrada.</p>
+            <h1 className="checkout-page__title">Productos y servicios</h1>
+            <p className="checkout-page__subtitle">Comprá productos o contrată servicios sueltos, sin necesidad de una entrada.</p>
           </div>
 
-          {products.length === 0 ? (
-            <div className="checkout-empty">Todavía no hay productos en la Tienda.</div>
-          ) : (
-            products.map((product) => {
+          <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
+            {(['TODOS', 'PRODUCTO', 'SERVICIO'] as const).map((tab) => (
+              <button
+                key={tab}
+                type="button"
+                onClick={() => setCategoryTab(tab)}
+                className={`checkout-btn ${categoryTab === tab ? 'checkout-btn--primary' : ''}`}
+                style={{ padding: '8px 16px', fontSize: 14 }}
+              >
+                {tab === 'TODOS' ? 'Todos' : tab === 'PRODUCTO' ? 'Productos' : 'Servicios'}
+              </button>
+            ))}
+          </div>
+
+          {(() => {
+            const visibleProducts = categoryTab === 'TODOS' ? products : products.filter((p) => p.category === categoryTab);
+            if (visibleProducts.length === 0) {
+              return <div className="checkout-empty">Todavía no hay {categoryTab === 'SERVICIO' ? 'servicios' : categoryTab === 'PRODUCTO' ? 'productos' : 'nada'} en la Tienda.</div>;
+            }
+            return visibleProducts.map((product) => {
               const variant = product.hasVariants ? selectedVariant[product.id] ?? product.variants[0] : null;
               const qty = quantities[product.id] ?? 0;
               return (
@@ -96,8 +113,8 @@ export function TiendaPage() {
                   )}
                 </div>
               );
-            })
-          )}
+            });
+          })()}
         </div>
       </div>
     </div>

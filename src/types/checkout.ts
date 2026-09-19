@@ -26,9 +26,12 @@ export interface AddonVariant {
   sortOrder: number;
 }
 
+export type AddonCategory = 'PRODUCTO' | 'SERVICIO';
+
 export interface AddOn {
   id: string;
   name: string;
+  category: AddonCategory;
   description: string | null;
   imageUrl: string | null;
   priceCents: number;
