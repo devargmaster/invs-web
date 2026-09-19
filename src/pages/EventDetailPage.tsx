@@ -174,6 +174,9 @@ export function EventDetailPage() {
                 EN VIVO AHORA
               </span>
             )}
+            {!event.date && (
+              <span className="event-card__soon-badge">Próximamente</span>
+            )}
           </div>
 
           {/* Event info */}
@@ -263,7 +266,16 @@ export function EventDetailPage() {
 
         {/* Ticket sidebar — sticky en desktop, sección normal en mobile */}
         <aside className="detail-page__sidebar">
-          {canGetTicket && (
+          {canGetTicket && !event.date && (
+            <div className="detail-page__cta-card">
+              <span className="detail-page__cta-title">Próximamente</span>
+              <p className="detail-page__cta-note">
+                Todavía no confirmamos la fecha de este evento — la venta de entradas se habilita apenas se defina.
+              </p>
+            </div>
+          )}
+
+          {canGetTicket && event.date && (
             <div className="detail-page__cta-card">
               <span className="detail-page__cta-title">Conseguí tu entrada</span>
               <p className="detail-page__cta-note">

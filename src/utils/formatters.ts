@@ -1,4 +1,5 @@
-export function formatDate(iso: string): string {
+export function formatDate(iso: string | null | undefined): string {
+  if (!iso) return 'Fecha a confirmar';
   const d = new Date(iso);
   return d.toLocaleString('es-AR', {
     day: '2-digit', month: '2-digit', year: 'numeric',

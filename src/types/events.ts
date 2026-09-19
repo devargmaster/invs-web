@@ -5,7 +5,7 @@ export interface Event {
   id: string;
   title: string;
   description: string;
-  date: string;
+  date: string | null; // null = "Próximamente" (anunciado, fecha a confirmar)
   location: string | null;
   mode: EventMode;
   status: EventStatus;
