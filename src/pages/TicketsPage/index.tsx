@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { ticketsService } from '../../services/ticketsService';
 import { ordersService } from '../../services/ordersService';
+import { contentPurchasesService } from '../../services/contentPurchasesService';
+import { storeService } from '../../services/storeService';
 import { ApiError } from '../../services/apiClient';
 import { useAuth } from '../../context/AuthContext';
 import { ErrorBanner } from '../../components/ErrorBanner';
@@ -10,7 +12,67 @@ import { ShareTicketModal } from './components/ShareTicketModal';
 import { formatDate, formatMoney } from '../../utils/formatters';
 import type { Ticket } from '../../types/tickets';
 import type { Order, OrderStatus } from '../../types/checkout';
+import type { ContentPurchase } from '../../types/content';
+import type { StorePurchase } from '../../types/store';
 import './TicketsPage.css';
+
+// Unifica los 3 tipos de compra que existen en INVS (entradas de evento,
+// contenido/streaming, Tienda) en una sola lista — antes esta pantalla
+// solo mostraba Order (entradas), así que una compra de Tienda o de
+// streaming pagada por Mercado Pago no aparecía en ningún lado para el
+// usuario.
+interface PurchaseCardData {
+  id: string;
+  kind: string;
+  title: string;
+  meta: string;
+  status: OrderStatus;
+  priceCents: number;
+  currency: string;
+  createdAt: string;
+}
+
+function buildUnifiedPurchases(orders: Order[], contentPurchases: ContentPurchase[], storePurchases: StorePurchase[]): PurchaseCardData[] {
+  const fromOrders: PurchaseCardData[] = orders.map((o) => ({
+    id: `order:${o.id}`,
+    kind: 'Entrada',
+    title: o.event?.title ?? 'Evento',
+    meta: [
+      (o.tickets?.length ?? 0) > 0 ? `${o.tickets!.length}× ${o.tickets!.length === 1 ? 'Entrada' : 'Entradas'}` : null,
+      ...(o.addons?.map((a) => `${a.quantity}× ${a.addon?.name ?? 'Adicional'}${a.variant ? ` (${a.variant.label})` : ''}`) ?? []),
+    ].filter(Boolean).join(' · '),
+    status: o.status,
+    priceCents: o.totalCents,
+    currency: o.currency,
+    createdAt: o.createdAt,
+  }));
+
+  const fromContent: PurchaseCardData[] = contentPurchases.map((cp) => ({
+    id: `content:${cp.id}`,
+    kind: cp.recordingId ? 'Grabación' : 'Streaming en vivo',
+    title: cp.recording?.title ?? cp.event?.title ?? 'Contenido',
+    meta: '',
+    status: cp.status,
+    priceCents: cp.priceCents,
+    currency: cp.currency,
+    createdAt: cp.createdAt,
+  }));
+
+  const fromStore: PurchaseCardData[] = storePurchases.map((sp) => ({
+    id: `store:${sp.id}`,
+    kind: 'Tienda',
+    title: sp.addon?.name ?? 'Producto',
+    meta: `${sp.quantity}×${sp.variant ? ` ${sp.variant.label}` : ''}`,
+    status: sp.status,
+    priceCents: sp.priceCents,
+    currency: sp.currency,
+    createdAt: sp.createdAt,
+  }));
+
+  return [...fromOrders, ...fromContent, ...fromStore].sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+  );
+}
 
 type TicketTab = 'proximos' | 'anteriores' | 'reservas';
 type Tab = TicketTab | 'pedidos';
@@ -40,6 +102,8 @@ export function TicketsPage() {
   const { user } = useAuth();
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
+  const [contentPurchases, setContentPurchases] = useState<ContentPurchase[]>([]);
+  const [storePurchases, setStorePurchases] = useState<StorePurchase[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<Tab>('proximos');
@@ -51,12 +115,16 @@ export function TicketsPage() {
   const load = useCallback(async () => {
     setError(null);
     try {
-      const [ticketsData, ordersData] = await Promise.all([
+      const [ticketsData, ordersData, contentData, storeData] = await Promise.all([
         ticketsService.getMyTickets(),
         ordersService.getMyOrders(),
+        contentPurchasesService.getMyPurchases().catch(() => []),
+        storeService.getMyPurchases().catch(() => []),
       ]);
       setTickets(ticketsData);
       setOrders(ordersData);
+      setContentPurchases(contentData);
+      setStorePurchases(storeData);
       setSelected((prev) => (prev ? ticketsData.find((t) => t.id === prev.id) ?? null : null));
     } catch (e) {
       setError(e instanceof ApiError ? e.message : 'Error cargando tickets.');
@@ -73,7 +141,12 @@ export function TicketsPage() {
     return g;
   }, [tickets]);
 
-  const tabCount = (tab: Tab) => (tab === 'pedidos' ? orders.length : grouped[tab].length);
+  const unifiedPurchases = useMemo(
+    () => buildUnifiedPurchases(orders, contentPurchases, storePurchases),
+    [orders, contentPurchases, storePurchases],
+  );
+
+  const tabCount = (tab: Tab) => (tab === 'pedidos' ? unifiedPurchases.length : grouped[tab].length);
 
   const handleCancelTransfer = async (transferId: string) => {
     setCancellingId(transferId);
@@ -99,7 +172,7 @@ export function TicketsPage() {
     );
   }
 
-  if (tickets.length === 0 && orders.length === 0) {
+  if (tickets.length === 0 && unifiedPurchases.length === 0) {
     return (
       <div className="tickets-page tickets-page--empty">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="64" height="64" style={{ color: 'var(--color-border)' }}>
@@ -146,45 +219,33 @@ export function TicketsPage() {
       </div>
 
       {activeTab === 'pedidos' ? (
-        orders.length === 0 ? (
+        unifiedPurchases.length === 0 ? (
           <div className="tickets-page__tab-empty">Todavía no hiciste ninguna compra.</div>
         ) : (
           <div className="tickets-page__orders">
-            {orders.map((o) => {
-              const status = ORDER_STATUS_LABEL[o.status];
-              const ticketCount = o.tickets?.length ?? 0;
+            {unifiedPurchases.map((p) => {
+              const status = ORDER_STATUS_LABEL[p.status];
               return (
-                <article className="order-card" key={o.id}>
+                <article className="order-card" key={p.id}>
                   <header className="order-card__head">
                     <div>
-                      <h3 className="order-card__title">{o.event?.title ?? 'Evento'}</h3>
-                      <p className="order-card__meta">Compra del {formatDate(o.createdAt)}</p>
+                      <h3 className="order-card__title">{p.title}</h3>
+                      <p className="order-card__meta">{p.kind} · Compra del {formatDate(p.createdAt)}</p>
                     </div>
                     <span className={`ticket-card__badge ticket-card__badge--${status.tone} order-card__badge`}>
                       {status.label}
                     </span>
                   </header>
-                  <ul className="order-card__items">
-                    {ticketCount > 0 && (
+                  {p.meta && (
+                    <ul className="order-card__items">
                       <li className="order-card__item">
-                        <span>{ticketCount}× {ticketCount === 1 ? 'Entrada' : 'Entradas'}</span>
+                        <span>{p.meta}</span>
                       </li>
-                    )}
-                    {o.addons?.map((a) => (
-                      <li className="order-card__item" key={a.id}>
-                        <span>
-                          {a.quantity}× {a.addon?.name ?? 'Adicional'}
-                          {a.variant ? ` — ${a.variant.label}` : ''}
-                        </span>
-                        <span className="order-card__price">
-                          {formatMoney(a.unitPriceCents * a.quantity, o.currency)}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
+                    </ul>
+                  )}
                   <footer className="order-card__total">
                     <span>Total</span>
-                    <strong>{formatMoney(o.totalCents, o.currency)}</strong>
+                    <strong>{formatMoney(p.priceCents, p.currency)}</strong>
                   </footer>
                 </article>
               );
