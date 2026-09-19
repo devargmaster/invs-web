@@ -119,9 +119,10 @@ async function request<T>(
       setToken(null);
       window.location.href = '/login';
     }
-    const msg =
-      (body as { message?: string })?.message ??
-      `Error ${response.status}`;
+    // El backend puede mandar `message` como string único o como array
+    // (así devuelve NestJS los errores de validación, uno por campo).
+    const rawMessage = (body as { message?: string | string[] })?.message;
+    const msg = Array.isArray(rawMessage) ? rawMessage.join(' ') : rawMessage ?? `Error ${response.status}`;
     throw new ApiError(response.status, msg, body);
   }
 
