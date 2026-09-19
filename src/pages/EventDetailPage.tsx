@@ -3,14 +3,17 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { eventsService } from '../services/eventsService';
 import { ticketsService } from '../services/ticketsService';
 import { streamingService } from '../services/streamingService';
+import { accessRequestsService } from '../services/accessRequestsService';
 import { ApiError } from '../services/apiClient';
 import { ErrorBanner } from '../components/ErrorBanner';
 import { LoadingSpinner } from '../components/LoadingSpinner';
 import { StreamPlayer } from '../components/StreamPlayer';
+import { AccessRequestModal } from '../components/AccessRequestModal';
 import { formatDate, modeLabel, formatMoney } from '../utils/formatters';
 import type { Event } from '../types/events';
 import type { StreamingTokenResponse, RecordingTokenResponse } from '../types/streaming';
 import type { RecordingWithAccess, AvailableAccess } from '../types/content';
+import type { AccessRequest } from '../types/accessRequest';
 import { useModuleTheme } from '../theme/useModuleTheme';
 import './EventDetailPage.css';
 
@@ -43,6 +46,9 @@ export function EventDetailPage() {
 
   const [hasTicket, setHasTicket] = useState(false);
 
+  const [accessRequest, setAccessRequest] = useState<AccessRequest | null>(null);
+  const [showAccessRequestModal, setShowAccessRequestModal] = useState(false);
+
   useEffect(() => {
     if (!eventId) return;
 
@@ -54,6 +60,10 @@ export function EventDetailPage() {
     ticketsService.getTicketsForEvent(eventId)
       .then(tickets => setHasTicket(tickets.length > 0))
       .catch(() => setHasTicket(false));
+
+    accessRequestsService.getMine(eventId)
+      .then(setAccessRequest)
+      .catch(() => setAccessRequest(null));
   }, [eventId]);
 
   useEffect(() => {
@@ -252,8 +262,8 @@ export function EventDetailPage() {
         </div>
 
         {/* Ticket sidebar — sticky en desktop, sección normal en mobile */}
-        {canGetTicket && (
-          <aside className="detail-page__sidebar">
+        <aside className="detail-page__sidebar">
+          {canGetTicket && (
             <div className="detail-page__cta-card">
               <span className="detail-page__cta-title">Conseguí tu entrada</span>
               <p className="detail-page__cta-note">
@@ -285,9 +295,68 @@ export function EventDetailPage() {
                 </button>
               )}
             </div>
-          </aside>
-        )}
+          )}
+
+          {/* "Tengo código de acceso" — disponible en todos los eventos,
+              independiente de si se puede comprar entrada. */}
+          <div className="detail-page__cta-card">
+            {!accessRequest && (
+              <>
+                <span className="detail-page__cta-title">¿Tenés código de acceso?</span>
+                <p className="detail-page__cta-note">
+                  Acreditación de prensa o invitados. El equipo de INVS revisa y aprueba tu solicitud.
+                </p>
+                <button
+                  className="detail-page__btn detail-page__btn--secondary"
+                  onClick={() => setShowAccessRequestModal(true)}
+                >
+                  Tengo código de acceso
+                </button>
+              </>
+            )}
+            {accessRequest?.status === 'PENDING' && (
+              <>
+                <span className="detail-page__cta-title">Solicitud enviada</span>
+                <p className="detail-page__cta-note">Tu pedido de acceso está pendiente de aprobación. Te avisamos por mail.</p>
+              </>
+            )}
+            {accessRequest?.status === 'APPROVED' && (
+              <>
+                <span className="detail-page__cta-title">Acceso aprobado ✓</span>
+                <p className="detail-page__cta-note">Ya tenés tu entrada lista.</p>
+                <button className="detail-page__btn detail-page__btn--secondary" onClick={() => navigate('/entradas')}>
+                  Ver mi entrada
+                </button>
+              </>
+            )}
+            {accessRequest?.status === 'REJECTED' && (
+              <>
+                <span className="detail-page__cta-title">Solicitud no aprobada</span>
+                <p className="detail-page__cta-note">
+                  {accessRequest.rejectionReason || 'No pudimos aprobar tu solicitud de acceso.'}
+                </p>
+                <button
+                  className="detail-page__btn detail-page__btn--secondary"
+                  onClick={() => setShowAccessRequestModal(true)}
+                >
+                  Volver a solicitar
+                </button>
+              </>
+            )}
+          </div>
+        </aside>
       </div>
+
+      {showAccessRequestModal && eventId && (
+        <AccessRequestModal
+          eventId={eventId}
+          onClose={() => setShowAccessRequestModal(false)}
+          onSent={(request) => {
+            setAccessRequest(request);
+            setShowAccessRequestModal(false);
+          }}
+        />
+      )}
     </div>
   );
 }
